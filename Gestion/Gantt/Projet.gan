@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="PFE" company="" webLink="http://" view-date="2020-09-28" view-index="0" gantt-divider-location="410" resource-divider-location="300" version="2.8.11" locale="en_US">
+    <description><![CDATA[Le robot..
+
+Rouge := Remise d'un document important
+
+Bleu:= task standard
+
+Vert:= rédaction de document
+
+Gris := task par le superviseur]]></description>
+    <view zooming-state="default:2" id="gantt-chart">
+        <field id="tpd3" name="Name" width="204" order="0"/>
+        <field id="tpd4" name="Begin date" width="101" order="1"/>
+        <field id="tpd5" name="End date" width="101" order="2"/>
+        <option id="color.recent"><![CDATA[#ff6600 #999999 #ff0000 #00ff00 #f4f4f4]]></option>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Name" width="210" order="0"/>
+        <field id="1" name="Default role" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="false"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="46" name="Proposition de services" color="#ff0000" meeting="false" start="2020-09-17" duration="6" complete="25" thirdDate="2020-09-18" thirdDate-constraint="0" expand="true">
+            <task id="47" name="Confirmation avec Superviseur et Coordonateur" color="#ff6600" meeting="false" start="2020-09-17" duration="1" complete="100" thirdDate="2020-09-17" thirdDate-constraint="0" expand="true">
+                <depend id="48" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="48" name="Soumission de projet" color="#ff0000" meeting="false" start="2020-09-18" duration="1" complete="100" thirdDate="2020-09-17" thirdDate-constraint="0" expand="true"/>
+            <task id="53" name="Élaboration du concepte" color="#8cb6ce" meeting="false" start="2020-09-18" duration="1" complete="0" thirdDate="2020-09-22" thirdDate-constraint="0" expand="true"/>
+            <task id="49" name="Rédaction de la Proposition de services" color="#00ff00" meeting="false" start="2020-09-18" duration="4" complete="0" thirdDate="2020-09-17" thirdDate-constraint="0" expand="true">
+                <depend id="78" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="78" name="Remis de la proposition de services" color="#ff0000" meeting="false" start="2020-09-24" duration="1" complete="0" thirdDate="2020-09-08" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="15" name="Rapport #1  ingénierie de concept" color="#ff0000" meeting="false" start="2020-11-13" duration="6" complete="0" thirdDate="2020-09-16" thirdDate-constraint="0" priority="4" expand="false">
+            <task id="38" name="Remise du rapport au conseillier" color="#ff0000" meeting="false" start="2020-11-13" duration="1" complete="0" thirdDate="2020-10-28" thirdDate-constraint="0" expand="true">
+                <depend id="30" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="30" name="Correction rapport 1" color="#00ff00" meeting="false" start="2020-11-16" duration="4" complete="0" thirdDate="2020-09-09" thirdDate-constraint="0" expand="true">
+                <depend id="33" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="45" name="Dépôt par le conseiller sur web-projet de l’évaluation du rapport d’étape 1; ingénierie de concept" color="#999999" meeting="false" start="2020-11-13" duration="6" complete="0" thirdDate="2020-10-28" thirdDate-constraint="0" expand="true"/>
+            <task id="33" name="Dépôt sur web-projet de la version corrigée du rapport d’étape #1" color="#ff0000" meeting="false" start="2020-11-20" duration="1" complete="0" thirdDate="2020-10-28" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="1" name="Rapport #2  ingénierie Préliminaire" color="#ff0000" meeting="false" start="2021-02-12" duration="6" complete="0" thirdDate="2020-09-16" thirdDate-constraint="0" priority="4" expand="false">
+            <task id="3" name="Remise du rapport au conseillier" color="#ff0000" meeting="false" start="2021-02-12" duration="1" complete="0" thirdDate="2020-10-28" thirdDate-constraint="0" expand="true">
+                <depend id="7" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="7" name="Correction rapport 1" color="#00ff00" meeting="false" start="2021-02-15" duration="4" complete="0" thirdDate="2020-09-09" thirdDate-constraint="0" expand="true">
+                <depend id="9" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="5" name="Dépôt par le conseiller sur web-projet de l’évaluation du rapport d’étape 1; ingénierie de concept" color="#999999" meeting="false" start="2021-02-19" duration="1" complete="0" thirdDate="2020-10-28" thirdDate-constraint="0" expand="true"/>
+            <task id="9" name="Dépôt sur web-projet de la version corrigée du rapport d’étape #1" color="#ff0000" meeting="false" start="2021-02-19" duration="1" complete="0" thirdDate="2020-10-28" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="97" name="Rapport #3  ingénierie Détaillée" color="#ff0000" meeting="false" start="2021-03-26" duration="6" complete="0" thirdDate="2020-09-16" thirdDate-constraint="0" priority="4" expand="false">
+            <task id="99" name="Remise du rapport au conseillier" color="#ff0000" meeting="false" start="2021-03-26" duration="1" complete="0" thirdDate="2020-10-28" thirdDate-constraint="0" expand="true">
+                <depend id="103" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="103" name="Correction rapport 3" color="#00ff00" meeting="false" start="2021-03-29" duration="4" complete="0" thirdDate="2020-09-09" thirdDate-constraint="0" expand="true">
+                <depend id="101" type="2" difference="0" hardness="Strong"/>
+                <depend id="105" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="101" name="Dépôt par le conseiller sur web-projet de l’évaluation du rapport d’étape 3; ingénierie Détaillée" color="#999999" meeting="false" start="2021-04-02" duration="1" complete="0" thirdDate="2020-10-28" thirdDate-constraint="0" expand="true"/>
+            <task id="105" name="Dépôt sur web-projet de la version corrigée du rapport d’étape #3" color="#ff0000" meeting="false" start="2021-04-02" duration="1" complete="0" thirdDate="2020-10-28" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="112" name="Présentation" meeting="false" start="2021-04-09" duration="15" complete="0" expand="false">
+            <task id="114" name="Dépot sur web-projet du résumé de projet" color="#ff0000" meeting="false" start="2021-04-09" duration="1" complete="0" thirdDate="2021-03-15" thirdDate-constraint="0" expand="true"/>
+            <task id="115" name="Présentations publiques des projets devant jury" color="#ff6600" meeting="false" start="2021-04-12" duration="4" complete="0" thirdDate="2021-03-15" thirdDate-constraint="0" expand="true"/>
+            <task id="117" name="Rencontre du comité-aviseur – revue des évaluations de projets" color="#999999" meeting="false" start="2021-04-29" duration="1" complete="0" thirdDate="2021-03-15" thirdDate-constraint="0" expand="true"/>
+        </task>
+    </tasks>
+    <resources>
+        <resource id="0" name="Antoine Boucher" function="SoftwareDevelopment:2" contacts="" phone=""/>
+        <resource id="1" name="Benjamin Quessy" function="Default:1" contacts="" phone=""/>
+        <resource id="2" name="Alexandre Tremblay" function="SoftwareDevelopment:2" contacts="" phone=""/>
+        <resource id="3" name="Alexandre Robicheau" function="1" contacts="" phone=""/>
+    </resources>
+    <allocations/>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+    <roles roleset-name="SoftwareDevelopment"/>
+    <roles>
+        <role id="1" name="Superviser"/>
+    </roles>
+</project>
