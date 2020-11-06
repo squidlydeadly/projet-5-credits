@@ -1,13 +1,50 @@
 #include <Arduino.h>
+#include "esp_bt_main.h"
+#include "esp_bt_device.h"
 
-//int LED_BUILTIN = 2;
-
+bool initBluetooth()
+{
+  if (!btStart()) {
+    Serial.println("Failed to initialize controller");
+    return false;
+  }
+ 
+  if (esp_bluedroid_init() != ESP_OK) {
+    Serial.println("Failed to initialize bluedroid");
+    return false;
+  }
+ 
+  if (esp_bluedroid_enable() != ESP_OK) {
+    Serial.println("Failed to enable bluedroid");
+    return false;
+  }
+ 
+}
+ 
+void printDeviceAddress() {
+ 
+  const uint8_t* point = esp_bt_dev_get_address();
+ 
+  for (int i = 0; i < 6; i++) {
+ 
+    char str[3];
+ 
+    sprintf(str, "%02X", (int)point[i]);
+    Serial.print(str);
+ 
+    if (i < 5){
+      Serial.print(":");
+    }
+ 
+  }
+}
+ 
 void setup() {
-pinMode (2, OUTPUT);
+  Serial.begin(9600);
+ 
+  initBluetooth();
+  printDeviceAddress();
+  
 }
-void loop() {
-digitalWrite(2, HIGH);
-delay(1000);
-digitalWrite(2, LOW);
-delay(1000);
-}
+ 
+void loop() {}
