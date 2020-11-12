@@ -1,0 +1,638 @@
+#VRML_SIM R2020b utf8
+WorldInfo {
+  info [
+    "A soccer game."
+    "This example demonstrates several capabilities of the supervisor:"
+    "- read and modify the position of objects"
+    "- display text on the simulation window"
+    "- send messages to robot controllers"
+  ]
+  title "Soccer Game"
+  optimalThreadCount 8
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation 0.6777655251204309 -0.7248581364027881 -0.1233473755249917 5.552335558974906
+  position -0.23373476075366417 0.3401247357069073 1.008948828119487
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+DEF SOCCER_FIELD Solid {
+  children [
+    DEF GROUND Shape {
+      appearance PBRAppearance {
+        baseColorMap ImageTexture {
+          url [
+            "soccer/soccer-256.jpg"
+          ]
+        }
+        roughness 1
+        metalness 0
+      }
+      geometry Plane {
+        size 1.5 1.5
+      }
+    }
+    DEF BLUE_GOAL_GROUND Shape {
+      appearance PBRAppearance {
+        baseColorMap ImageTexture {
+          url [
+            "soccer/soccer-256.jpg"
+          ]
+        }
+        roughness 1
+        metalness 0
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0.95 0 0.75
+            0.75 0 0.75
+            0.75 0 -0.75
+            0.95 0 -0.75
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0 0
+            0 0
+            0 0
+            0 0
+          ]
+        }
+        ccw FALSE
+        coordIndex [
+          0, 1, 2, 3
+        ]
+        texCoordIndex [
+          0, 1, 2, 3
+        ]
+      }
+    }
+    DEF YELLOW_GOAL_GROUND Shape {
+      appearance PBRAppearance {
+        baseColorMap ImageTexture {
+          url [
+            "soccer/soccer-256.jpg"
+          ]
+        }
+        roughness 1
+        metalness 0
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            -0.95 0 0.75
+            -0.75 0 0.75
+            -0.75 0 -0.75
+            -0.95 0 -0.75
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0 0
+            0 0
+            0 0
+            0 0
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3
+        ]
+        texCoordIndex [
+          0, 1, 2, 3
+        ]
+      }
+    }
+    DEF NORTH_WALL Shape {
+      appearance DEF WALL_APPEARANCE PBRAppearance {
+        baseColor 0.388235 0.388235 0.388235
+        roughness 1
+        metalness 0
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0.76 0 0.66
+            0.76 0 0.21
+            0.75 0 0.21
+            0.75 0 0.59
+            0.69 0 0.65
+            -0.69 0 0.65
+            -0.75 0 0.59
+            -0.75 0 0.21
+            -0.76 0 0.21
+            -0.76 0 0.65
+            -0.76 0 0.66
+            0.76 0.05 0.66
+            0.76 0.05 0.21
+            0.75 0.05 0.21
+            0.75 0.05 0.59
+            0.69 0.05 0.65
+            -0.69 0.05 0.65
+            -0.75 0.05 0.59
+            -0.75 0.05 0.21
+            -0.76 0.05 0.21
+            -0.76 0.05 0.65
+            -0.76 0.05 0.66
+          ]
+        }
+        coordIndex [
+          0, 10, 9, -1, 9, 8, 7, -1, 9, 7, 6, -1, 2, 1, 0, -1, 3, 2, 0, -1, 9, 6, 5, -1, 4, 3, 0, -1, 0, 9, 5, -1, 0, 5, 4, -1, 11, 12, 13, -1, 11, 13, 14, -1, 20, 21, 11, -1, 18, 19, 20, -1, 17, 18, 20, -1, 11, 14, 15, -1, 16, 17, 20, -1, 11, 15, 16, -1, 11, 16, 20, -1, 0, 1, 12, 11, -1, 1, 2, 13, 12, -1, 2, 3, 14, 13, -1, 3, 4, 15, 14, -1, 4, 5, 16, 15, -1, 5, 6, 17, 16, -1, 6, 7, 18, 17, -1, 7, 8, 19, 18, -1, 8, 9, 20, 19, -1, 9, 10, 21, 20, -1, 10, 0, 11, 21, -1
+        ]
+      }
+    }
+    DEF SOUTH_WALL Shape {
+      appearance USE WALL_APPEARANCE
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0.76 0 -0.66
+            -0.76 0 -0.66
+            -0.76 0 -0.65
+            -0.76 0 -0.21
+            -0.75 0 -0.21
+            -0.75 0 -0.59
+            -0.69 0 -0.65
+            0.69 0 -0.65
+            0.75 0 -0.59
+            0.75 0 -0.21
+            0.76 0 -0.21
+            0.76 0.05 -0.66
+            -0.76 0.05 -0.66
+            -0.76 0.05 -0.65
+            -0.76 0.05 -0.21
+            -0.75 0.05 -0.21
+            -0.75 0.05 -0.59
+            -0.69 0.05 -0.65
+            0.69 0.05 -0.65
+            0.75 0.05 -0.59
+            0.75 0.05 -0.21
+            0.76 0.05 -0.21
+          ]
+        }
+        coordIndex [
+          0, 10, 9, -1, 0, 9, 8, -1, 2, 1, 0, -1, 4, 3, 2, -1, 5, 4, 2, -1, 0, 8, 7, -1, 6, 5, 2, -1, 0, 7, 6, -1, 0, 6, 2, -1, 11, 12, 13, -1, 13, 14, 15, -1, 13, 15, 16, -1, 20, 21, 11, -1, 19, 20, 11, -1, 13, 16, 17, -1, 18, 19, 11, -1, 11, 13, 17, -1, 11, 17, 18, -1, 0, 1, 12, 11, -1, 1, 2, 13, 12, -1, 2, 3, 14, 13, -1, 3, 4, 15, 14, -1, 4, 5, 16, 15, -1, 5, 6, 17, 16, -1, 6, 7, 18, 17, -1, 7, 8, 19, 18, -1, 8, 9, 20, 19, -1, 9, 10, 21, 20, -1, 10, 0, 11, 21, -1
+        ]
+      }
+    }
+    DEF BLUE_GOAL Shape {
+      appearance PBRAppearance {
+        baseColor 0 0 1
+        roughness 1
+        metalness 0
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0.86 0 0.21
+            0.86 0 -0.21
+            0.75 0 -0.21
+            0.75 0 -0.2
+            0.85 0 -0.2
+            0.85 0 0.2
+            0.75 0 0.2
+            0.75 0 0.21
+            0.86 0 0.21
+            0.86 0.12 0.21
+            0.86 0.12 -0.21
+            0.75 0.12 -0.21
+            0.75 0.12 -0.2
+            0.85 0.12 -0.2
+            0.85 0.12 0.2
+            0.75 0.12 0.2
+            0.75 0.12 0.21
+            0.86 0.12 0.21
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, 4, 5, 6, 7, 8, -1, 0, 1, 10, 9, -1, 1, 2, 11, 10, -1, 2, 3, 12, 11, -1, 3, 4, 13, 12, -1, 4, 5, 14, 13, -1, 5, 6, 15, 14, -1, 6, 7, 16, 15, -1, 7, 8, 17, 16, -1
+        ]
+      }
+    }
+    DEF YELLOW_GOAL Shape {
+      appearance PBRAppearance {
+        baseColor 1 1 0
+        roughness 1
+        metalness 0
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            -0.86 0 0.21
+            -0.75 0 0.21
+            -0.75 0 0.2
+            -0.85 0 0.2
+            -0.85 0 -0.2
+            -0.75 0 -0.2
+            -0.75 0 -0.21
+            -0.86 0 -0.21
+            -0.86 0 0.21
+            -0.86 0.12 0.21
+            -0.75 0.12 0.21
+            -0.75 0.12 0.2
+            -0.85 0.12 0.2
+            -0.85 0.12 -0.2
+            -0.75 0.12 -0.2
+            -0.75 0.12 -0.21
+            -0.86 0.12 -0.21
+            -0.86 0.12 0.21
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, 4, 5, 6, 7, 8, -1, 0, 1, 10, 9, -1, 1, 2, 11, 10, -1, 2, 3, 12, 11, -1, 3, 4, 13, 12, -1, 4, 5, 14, 13, -1, 5, 6, 15, 14, -1, 6, 7, 16, 15, -1, 7, 8, 17, 16, -1
+        ]
+      }
+    }
+  ]
+  name "soccer field"
+  boundingObject Group {
+    children [
+      USE GROUND
+      DEF NOTH_BBOX Transform {
+        translation 0 0.0251 -0.655
+        children [
+          Box {
+            size 1.5 0.05 0.01
+          }
+        ]
+      }
+      DEF SOUTH_BBOX Transform {
+        translation 0 0.0251 0.655
+        children [
+          Box {
+            size 1.5 0.05 0.01
+          }
+        ]
+      }
+      DEF NW_BBOX Transform {
+        translation -0.755 0.0251 -0.43
+        children [
+          Box {
+            size 0.01 0.05 0.435
+          }
+        ]
+      }
+      DEF NE_BBOX Transform {
+        translation 0.755 0.0251 -0.43
+        children [
+          Box {
+            size 0.01 0.05 0.435
+          }
+        ]
+      }
+      DEF SW_BBOX Transform {
+        translation -0.755 0.0251 0.43
+        children [
+          Box {
+            size 0.01 0.05 0.435
+          }
+        ]
+      }
+      DEF SE_BBOX Transform {
+        translation 0.755 0.0251 0.43
+        children [
+          Box {
+            size 0.01 0.05 0.435
+          }
+        ]
+      }
+      DEF NWC_BBOX Transform {
+        translation 0.725 0.0251 0.62
+        rotation 0 1 0 -0.7853
+        children [
+          Box {
+            size 0.01 0.05 0.09
+          }
+        ]
+      }
+      DEF NEC_BBOX Transform {
+        translation -0.725 0.0251 0.62
+        rotation 0 1 0 0.7853
+        children [
+          Box {
+            size 0.01 0.05 0.09
+          }
+        ]
+      }
+      DEF SWC_BBOX Transform {
+        translation 0.725 0.0251 -0.62
+        rotation 0 1 0 0.7853
+        children [
+          Box {
+            size 0.01 0.05 0.09
+          }
+        ]
+      }
+      DEF SEC_BBOX Transform {
+        translation -0.725 0.0251 -0.62
+        rotation 0 1 0 -0.7853
+        children [
+          Box {
+            size 0.01 0.05 0.09
+          }
+        ]
+      }
+      DEF YG_BBOX Transform {
+        translation -0.855 0.061 0
+        children [
+          Box {
+            size 0.01 0.12 0.42
+          }
+        ]
+      }
+      DEF BG_BBOX Transform {
+        translation 0.855 0.061 0
+        children [
+          Box {
+            size 0.01 0.12 0.42
+          }
+        ]
+      }
+      DEF BGS_BBOX Transform {
+        translation 0.8 0.061 0.205
+        children [
+          Box {
+            size 0.1 0.12 0.01
+          }
+        ]
+      }
+      DEF BGN_BBOX Transform {
+        translation 0.8 0.061 -0.205
+        children [
+          Box {
+            size 0.1 0.12 0.01
+          }
+        ]
+      }
+      DEF YGS_BBOX Transform {
+        translation -0.8 0.061 0.205
+        children [
+          Box {
+            size 0.1 0.12 0.01
+          }
+        ]
+      }
+      DEF YGN_BBOX Transform {
+        translation -0.8 0.061 -0.205
+        children [
+          Box {
+            size 0.1 0.12 0.01
+          }
+        ]
+      }
+    ]
+  }
+  locked TRUE
+}
+DEF BALL SoccerBall {
+  hidden linearVelocity_0 -0.0006937962835045304 3.604510862389703e-17 -0.0004350676211149994
+  hidden angularVelocity_0 -0.020717505767380923 0.03315140531808987 0.03303791826212049
+  translation 0.6024015321397893 0.02092151999999999 0.5846458570017953
+  rotation -0.3577199054607731 -0.8216374405024403 -0.44378867223233 -1.7129221897281495
+  radius 0.021
+  mass 0.05
+}
+Robot {
+  translation 0 0.54 9.17658e-08
+  rotation 1 0 0 -1.5707953071795862
+  children [
+    Camera {
+      translation 0 0 0.49
+      fieldOfView 1.5
+      width 960
+      height 720
+    }
+  ]
+  name "robot(1)"
+  controller "soccer_supervisor"
+}
+DEF ROBOT3 Robot {
+  translation -0.6711411777475875 -0.0001943081787549733 0.605071266982867
+  rotation 0.0027330887729515372 0.9998733591058471 -0.015677881749423583 2.809302757229984
+  children [
+    DEF MAIN_BODY Transform {
+      translation 0 0.0415 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.0820075 0.364731 0.8
+            roughness 1
+            metalness 0
+          }
+          geometry DEF BODY Cylinder {
+            height 0.08
+            radius 0.045
+          }
+        }
+      ]
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 83837.4726583414
+        axis -1 0 0
+        anchor 0 0.025 0
+      }
+      device [
+        RotationalMotor {
+          name "left wheel motor"
+        }
+        PositionSensor {
+          name "left wheel sensor"
+        }
+      ]
+      endPoint DEF LEFT_WHEEL Solid {
+        translation -0.044997098693415394 0.024994319775489538 -3.927479605148607e-06
+        rotation 0.9999999999986541 -1.0738979993379543e-06 -1.240240785048493e-06 4.1934663127996945
+        children [
+          DEF WHEEL Transform {
+            rotation 0 0 1 1.57
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 1 0 0
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.025
+                }
+              }
+            ]
+          }
+        ]
+        name "left wheel"
+        boundingObject DEF WHEEL Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 1 0 0
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.01
+                radius 0.025
+              }
+            }
+          ]
+        }
+        physics DEF PHYSICS_WHEEL Physics {
+          density -1
+          mass 0.05
+        }
+        linearVelocity 8.50546352694437e-06 -2.5133151795131413e-06 -1.2986827713632471e-05
+        angularVelocity 4.726330620153454 -0.0012852992554353887 1.6315855271746333
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 76258.76789633145
+        axis -1 0 0
+        anchor 0 0.025 0
+      }
+      device [
+        RotationalMotor {
+          name "right wheel motor"
+        }
+        PositionSensor {
+          name "right wheel sensor"
+        }
+      ]
+      endPoint DEF RIGHT_WHEEL Solid {
+        translation 0.04499999999999996 0.025 0
+        rotation -1 0 0 1.4436583999923225
+        children [
+          DEF WHEEL Transform {
+            rotation 0 0 1 1.57
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 1 0 0
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.025
+                }
+              }
+            ]
+          }
+        ]
+        name "right wheel"
+        boundingObject USE WHEEL
+        physics DEF PHYSICS_WHEEL Physics {
+          density -1
+          mass 0.05
+        }
+        linearVelocity 6.745511318711593e-06 -7.950344007258579e-06 -7.995761340519953e-06
+        angularVelocity 4.726331375025392 -0.0012849249687244798 1.6315832997054793
+      }
+    }
+    DEF LEFT_EYE DistanceSensor {
+      translation -0.02 0.043 -0.042
+      rotation 0 1 0 2.07
+      children [
+        DEF INFRARED Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0.975691 0.981481 0.0252992
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.004
+                radius 0.008
+              }
+            }
+          ]
+        }
+      ]
+      name "ds0"
+      lookupTable [
+        0 1024 0
+        0.05 1024 0
+        0.15 0 0
+      ]
+      numberOfRays 2
+      aperture 1
+    }
+    DEF RIGHT_EYE DistanceSensor {
+      translation 0.02 0.043 -0.042
+      rotation 0 1 0 1.07
+      children [
+        DEF INFRARED Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0.975691 0.981481 0.0252992
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.004
+                radius 0.008
+              }
+            }
+          ]
+        }
+      ]
+      name "ds1"
+      lookupTable [
+        0 1024 0
+        0.05 1024 0
+        0.15 0 0
+      ]
+      numberOfRays 2
+      aperture 1
+    }
+    Receiver {
+    }
+    Camera {
+      translation 0 0.045 -0.045
+      children [
+        Transform {
+          rotation 1 0 0 1.57
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0.8 0.8 0.8
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.01
+                radius 0.007
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  name "robot3"
+  boundingObject DEF MYBOT_BOUNDING Transform {
+    translation 0 0.0415 0
+    children [
+      DEF BODY Cylinder {
+        height 0.08
+        radius 0.045
+      }
+    ]
+  }
+  physics DEF MYBOT_PHYSICS Physics {
+    density -1
+    mass 0.5
+  }
+  controller "soccer_player"
+  linearVelocity -1.9002875777687224e-06 7.406231050367751e-06 1.0505382033443311e-07
+  angularVelocity -8.532366427972762e-05 -0.00022883812270822052 0.00033388350267135245
+}

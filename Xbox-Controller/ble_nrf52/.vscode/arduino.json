@@ -1,0 +1,6 @@
+{
+    "port": "COM5",
+    "board": "adafruit:nrf52:feather52832",
+    "configuration": "softdevice=s132v6,debug=l0",
+    "sketch": "ble_nrf52.ino"
+}
