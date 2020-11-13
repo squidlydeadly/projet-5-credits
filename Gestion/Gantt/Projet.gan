@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="PFE" company="" webLink="http://" view-date="2020-12-30" view-index="0" gantt-divider-location="539" resource-divider-location="300" version="2.8.11" locale="en_CA">
+<?xml version="1.0" encoding="UTF-8"?><project name="PFE" company="" webLink="http://" view-date="2020-12-01" view-index="0" gantt-divider-location="600" resource-divider-location="300" version="2.8.11" locale="en_CA">
     <description><![CDATA[Le robot..
 
 Rouge := Remise d'un document important
@@ -10,10 +10,10 @@ Vert:= rédaction de document
 Gris := task par le superviseur
 
 Jaune := faut activement crisser d'quoi]]></description>
-    <view zooming-state="default:2" id="gantt-chart">
-        <field id="tpd3" name="Name" width="328" order="0"/>
-        <field id="tpd4" name="Begin date" width="91" order="1"/>
-        <field id="tpd5" name="End date" width="116" order="2"/>
+    <view zooming-state="default:8" id="gantt-chart">
+        <field id="tpd3" name="Name" width="392" order="0"/>
+        <field id="tpd4" name="Begin date" width="94" order="1"/>
+        <field id="tpd5" name="End date" width="95" order="2"/>
         <option id="color.recent"><![CDATA[#ffff00 #ff6600 #00ff00 #000000 #999999 #ff0000 #f4f4f4]]></option>
     </view>
     <view id="resource-table">
@@ -120,27 +120,39 @@ Jaune := faut activement crisser d'quoi]]></description>
                 <depend id="175" type="2" difference="0" hardness="Strong"/>
             </task>
         </task>
-        <task id="175" name="Ingénierie de préliminaire" color="#000000" meeting="false" start="2020-11-23" duration="63" complete="0" thirdDate="2020-11-23" thirdDate-constraint="0" expand="true">
+        <task id="175" name="Ingénierie de préliminaire" color="#000000" meeting="false" start="2020-11-23" duration="100" complete="0" thirdDate="2020-11-23" thirdDate-constraint="0" expand="true">
             <task id="198" name="Analyse détaillé des besoins" color="#ff6600" meeting="false" start="2020-11-23" duration="2" complete="0" thirdDate="2020-11-25" thirdDate-constraint="0" expand="false">
                 <depend id="176" type="2" difference="0" hardness="Strong"/>
                 <task id="287" name="Relevés Avec précision d'une table UQAC" color="#ffff00" meeting="false" start="2020-11-23" duration="2" complete="0" thirdDate="2020-11-23" thirdDate-constraint="0" expand="true"/>
             </task>
-            <task id="176" name="À déterminer en fonction du projet choisit" color="#8cb6ce" meeting="false" start="2020-11-25" duration="44" complete="0" thirdDate="2020-11-23" thirdDate-constraint="0" expand="true"/>
-            <task id="289" name="developement de la solution de detection" color="#000000" meeting="false" start="2020-11-23" duration="10" complete="0" thirdDate="2020-11-23" thirdDate-constraint="0" expand="true">
-                <task id="291" name="tetative avec fleche" meeting="false" start="2020-11-23" duration="5" complete="0" expand="true"/>
-                <task id="292" name="tentative avec QR code" color="#8cb6ce" meeting="false" start="2020-11-30" duration="5" complete="0" thirdDate="2020-11-30" thirdDate-constraint="0" expand="true"/>
+            <task id="176" name="À déterminer en fonction du projet choisit" color="#8cb6ce" meeting="false" start="2020-11-25" duration="23" complete="0" thirdDate="2020-11-23" thirdDate-constraint="0" expand="true"/>
+            <task id="289" name="developement de la solution de detection" color="#000000" meeting="false" start="2020-11-23" duration="20" complete="0" thirdDate="2020-11-23" thirdDate-constraint="0" expand="true">
+                <task id="291" name="tetative avec fleche" meeting="false" start="2020-11-23" duration="9" complete="0" expand="true">
+                    <depend id="292" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="292" name="tentative avec QR code" color="#8cb6ce" meeting="false" start="2020-12-04" duration="11" complete="0" thirdDate="2020-11-30" thirdDate-constraint="0" expand="true"/>
             </task>
-            <task id="298" name="control des mouvement avec algorithme" meeting="false" start="2020-11-23" duration="43" complete="0" expand="true">
+            <task id="298" name="control des mouvement avec algorithme" meeting="false" start="2020-11-23" duration="55" complete="0" expand="true">
                 <depend id="527" type="2" difference="0" hardness="Strong"/>
                 <task id="302" name="developement d'un algorithme" meeting="false" start="2020-11-23" duration="20" complete="0" expand="true"/>
-                <task id="303" name="teste de l'algorithme" meeting="false" start="2021-01-07" duration="5" complete="0" expand="true">
+                <task id="303" name="teste de l'algorithme" meeting="false" start="2021-01-11" duration="15" complete="0" expand="true">
                     <depend id="306" type="2" difference="0" hardness="Strong"/>
                 </task>
-                <task id="306" name="Amélioration algorithme" color="#8cb6ce" meeting="false" start="2021-01-14" duration="5" complete="0" thirdDate="2020-11-23" thirdDate-constraint="0" expand="true"/>
+                <task id="306" name="Amélioration algorithme" color="#8cb6ce" meeting="false" start="2021-02-01" duration="5" complete="0" thirdDate="2020-11-23" thirdDate-constraint="0" expand="true"/>
             </task>
-            <task id="527" name="controll avec AI" color="#8cb6ce" meeting="false" start="2021-01-21" duration="20" complete="0" thirdDate="2020-11-23" thirdDate-constraint="0" expand="true">
-                <task id="532" name="modele DQN" meeting="false" start="2021-01-21" duration="20" complete="0" expand="true"/>
-                <task id="534" name="entrainement" color="#8cb6ce" meeting="false" start="2021-02-01" duration="13" complete="0" thirdDate="2021-02-11" thirdDate-constraint="0" expand="true"/>
+            <task id="527" name="controll avec AI" color="#8cb6ce" meeting="false" start="2021-02-08" duration="25" complete="0" thirdDate="2020-11-23" thirdDate-constraint="0" expand="true">
+                <task id="532" name="modele DQN" meeting="false" start="2021-02-08" duration="15" complete="0" expand="true">
+                    <depend id="569" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="534" name="entrainement" color="#8cb6ce" meeting="false" start="2021-02-08" duration="20" complete="0" thirdDate="2021-02-11" thirdDate-constraint="0" expand="true"/>
+                <task id="569" name="autre methode AI" meeting="false" start="2021-03-01" duration="10" complete="0" expand="true"/>
+            </task>
+            <task id="544" name="mise en place avec la platforme robotique" color="#8cb6ce" meeting="false" start="2021-03-02" duration="29" complete="0" thirdDate="2021-02-09" thirdDate-constraint="0" expand="true">
+                <task id="573" name="implementation de l'alogorithme ou AI" meeting="false" start="2021-03-02" duration="15" complete="0" expand="true">
+                    <depend id="575" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="575" name="entrainement et teste avec AI ou algorithme" meeting="false" start="2021-03-23" duration="13" complete="0" expand="true"/>
+                <task id="574" name="mise en place de la platforme de jeu" meeting="false" start="2021-03-10" duration="23" complete="0" expand="true"/>
             </task>
             <task id="184" name="Rédaction du rapport d'ingénierie préliminaire" color="#00ff00" meeting="false" start="2021-01-22" duration="16" complete="0" thirdDate="2021-01-19" thirdDate-constraint="0" expand="true"/>
         </task>
@@ -156,8 +168,8 @@ Jaune := faut activement crisser d'quoi]]></description>
                 <depend id="201" type="2" difference="0" hardness="Strong"/>
             </task>
         </task>
-        <task id="201" name="Ingénierie Détaillé" color="#000000" meeting="false" start="2021-02-22" duration="24" complete="0" thirdDate="2020-12-31" thirdDate-constraint="0" expand="true">
-            <task id="207" name="Finaliser l'ingénierie selon préliminaire" color="#8cb6ce" meeting="false" start="2021-02-22" duration="24" complete="0" thirdDate="2021-02-22" thirdDate-constraint="0" expand="true"/>
+        <task id="201" name="Ingénierie Détaillé" color="#000000" meeting="false" start="2021-02-22" duration="35" complete="0" thirdDate="2020-12-31" thirdDate-constraint="0" expand="true">
+            <task id="207" name="Finaliser l'ingénierie selon préliminaire" color="#8cb6ce" meeting="false" start="2021-02-22" duration="35" complete="0" thirdDate="2021-02-22" thirdDate-constraint="0" expand="true"/>
             <task id="210" name="Rédaction du rapport détaillé" color="#00ff00" meeting="false" start="2021-03-03" duration="17" complete="0" thirdDate="2021-02-22" thirdDate-constraint="0" expand="true"/>
         </task>
         <task id="97" name="Rapport #3  ingénierie Détaillée" color="#ff0000" meeting="false" start="2021-03-26" duration="6" complete="0" thirdDate="2020-09-16" thirdDate-constraint="0" priority="4" expand="true">
