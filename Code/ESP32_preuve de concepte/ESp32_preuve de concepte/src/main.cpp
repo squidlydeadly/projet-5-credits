@@ -1,56 +1,25 @@
 #include <Arduino.h>
-#include <Ps3Controller.h>
+
 
 
 
 //*********************************************************************************************************************************************************************
 // get bluetooth addrress
+#include <PS4Controller.h>
 
-#include "esp_bt_main.h"
-#include "esp_bt_device.h"
- 
-bool initBluetooth()
+
+void setup()
 {
-  if (!btStart()) {
-    Serial.println("Failed to initialize controller");
-    return false;
-  }
- 
-  if (esp_bluedroid_init() != ESP_OK) {
-    Serial.println("Failed to initialize bluedroid");
-    return false;
-  }
- 
-  if (esp_bluedroid_enable() != ESP_OK) {
-    Serial.println("Failed to enable bluedroid");
-    return false;
-  }
- 
+    Serial.begin(9600);
+    PS4.begin("01:01:01:01:01:01");
+    Serial.println("Ready.");
 }
- 
-void printDeviceAddress() {
- 
-  const uint8_t* point = esp_bt_dev_get_address();
- 
-  for (int i = 0; i < 6; i++) {
- 
-    char str[3];
- 
-    sprintf(str, "%02X", (int)point[i]);
-    Serial.print(str);
- 
-    if (i < 5){
-      Serial.print(":");
-    }
- 
+
+void loop()
+{
+  if (PS4.isConnected()){
+    Serial.println("Connected!");
   }
+
+  delay(1000);
 }
- 
-void setup() {
-  Serial.begin(115200);
- 
-  initBluetooth();
-  printDeviceAddress();
-}
- 
-void loop() {}
