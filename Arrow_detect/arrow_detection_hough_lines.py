@@ -3,7 +3,7 @@ import cv2, numpy as np, argparse
 #ap = argparse.ArgumentParser()
 #ap.add_argument("-i", "--image", help = "path to the image file")
 #args = vars(ap.parse_args())
-img =  cv2.imread("arrowtest.png")
+img = cv2.imread("arrow_1.png")
 cv2.imshow("img",img)
 #convert the image to grayscale
 gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
