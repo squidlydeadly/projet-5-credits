@@ -247,7 +247,7 @@ class XInputJoystick(event.EventDispatcher):
             # an attempt to add deadzones and dampen noise
             # done by feel rather than following http://msdn.microsoft.com/en-gb/library/windows/desktop/ee417001%28v=vs.85%29.aspx#dead_zone
             # ags, 2014-07-01
-            if ((old_val != new_val and (new_val > 0.08000000000000000 or new_val < -0.08000000000000000) and abs(old_val - new_val) > 0.00000000500000000) or
+            if ((old_val != new_val and (new_val > 0.02000000000000000 or new_val < -0.02000000000000000) and abs(old_val - new_val) > 0.00000000500000000) or
                (axis == 'right_trigger' or axis == 'left_trigger') and new_val == 0 and abs(old_val - new_val) > 0.00000000500000000):
                 self.dispatch_event('on_axis', axis, new_val)
 
@@ -374,7 +374,7 @@ def sample_first_joystick():
 
     while True:
         j.dispatch_events()
-        time.sleep(.0001)
+        time.sleep(.01)
 
 if __name__ == "__main__":
     sample_first_joystick()
