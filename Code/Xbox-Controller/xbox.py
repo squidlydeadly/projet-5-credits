@@ -10,15 +10,11 @@ from paho.mqtt import client as mqtt_client
 import random
 import json
 
-broker = '127.0.0.1'
+broker = '192.168.0.217'
 port = 1883
 topic = "desk/light"
 # generate client ID with pub prefix randomly
 client_id = f'python-mqtt-{random.randint(0, 100)}'
-
-
-
-
 
 
 def connect_mqtt() -> mqtt_client:
@@ -89,7 +85,7 @@ def sample_first_joystick():
     while True:
         j.dispatch_events()
 
-        time.sleep(.001)
+        time.sleep(.0001)
         if client.is_connected():
            
             print("disconnected")

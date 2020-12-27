@@ -25,6 +25,6 @@ function setup() {
     console.log('Mosca server is up and running');
     console.log('\x1b[36m%s\x1b[0m', 'mosca MQTT broker start');
 }
-module.exports.run = start
+//module.exports.run = start
 
 start();

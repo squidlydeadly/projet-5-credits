@@ -15,7 +15,7 @@ const char* password = "rpi3_2356";
 /* this is the IP of PC/raspberry where you installed MQTT Server 
 on Wins use "ipconfig" 
 on Linux use "ifconfig" to get its IP address */
-const char* mqtt_server = "192.168.0.22";
+const char* mqtt_server = "192.168.0.217";
 
 /* create an instance of PubSubClient client */
 WiFiClient espClient;
@@ -67,12 +67,12 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
 
     if (axis == "l_thumb_x") {
         X_pot = root["value"];
-        if (abs(X_pot) < 250)
+        if (abs(X_pot) < 125)
             X_pot = 0;
 
     } else if (axis == "l_thumb_y") {
         Y_pot = root["value"];
-        if (abs(Y_pot) < 250)
+        if (abs(Y_pot) < 125)
             Y_pot = 0;
     }
 
@@ -91,7 +91,7 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
     //                away from the X-axis (Y=0). A greater value will assign
     //                more of the joystick's range to pivot actions.
     //                Allowable range: (0..+127)
-    float fPivYLimit = 32.0;
+    float fPivYLimit = 72.0;
 
     // TEMP VARIABLES
     float nMotPremixL; // Motor (left)  premixed output        (-128..+127)
