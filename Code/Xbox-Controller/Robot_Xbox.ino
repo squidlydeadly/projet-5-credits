@@ -59,6 +59,8 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
         inData += (char)payload[i];
     }
     //Serial.println();
+    Serial.println(topic);
+    Serial.println(inData);
 
     JsonObject& root = jsonBuffer.parseObject(inData);
 
