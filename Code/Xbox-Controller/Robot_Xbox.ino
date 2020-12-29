@@ -33,6 +33,9 @@ int r_motor_pwm_channel = 2;
 #define r_motor_A_pin D5
 #define r_motor_B_pin D6
 
+const char* Axis_Topic = "robot/axis";
+const char* Button_Topic = "robot/button";
+
 int motor_chanel = 0;
 
 int X_pot = 0;
@@ -50,10 +53,7 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
 {
     String inData;
     StaticJsonBuffer<200> jsonBuffer;
-    //Serial.print("Message received: ");
-    //Serial.println(topic);
 
-    //Serial.print("payload: ");
     for (int i = 0; i < length; i++) {
         //Serial.print((char)payload[i]);
         inData += (char)payload[i];
@@ -61,103 +61,104 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
     //Serial.println();
     Serial.println(topic);
     Serial.println(inData);
-
     JsonObject& root = jsonBuffer.parseObject(inData);
 
-    String axis = root["axis"];
-    Serial.println(axis);
-
-    if (axis == "l_thumb_x") {
-        X_pot = root["value"];
-        if (abs(X_pot) < 125)
-            X_pot = 0;
-
-    } else if (axis == "l_thumb_y") {
-        Y_pot = root["value"];
-        if (abs(Y_pot) < 125)
-            Y_pot = 0;
+    if (topic == Button_Topic) {
+        Serial.println("button ==============");
     }
 
-    // INPUTS
-    int nJoyX = map(X_pot, -500, 500, -512, 512); // Joystick X input                     (-128..+127)
-    int nJoyY = map(Y_pot, -500, 500, -512, 512);
-    ; // Joystick Y input                     (-128..+127)
+        String axis = root["axis"];
+        //Serial.println(axis);
 
-    // OUTPUTS
-    int nMotMixL; // Motor (left)  mixed output           (-128..+127)
-    int nMotMixR; // Motor (right) mixed output           (-128..+127)
+        if (axis == "l_thumb_x") {
+            X_pot = root["value"];
+            if (abs(X_pot) < 125)
+                X_pot = 0;
 
-    // CONFIG
-    // - fPivYLimt  : The threshold at which the pivot action starts
-    //                This threshold is measured in units on the Y-axis
-    //                away from the X-axis (Y=0). A greater value will assign
-    //                more of the joystick's range to pivot actions.
-    //                Allowable range: (0..+127)
-    float fPivYLimit = 72.0;
+        } else if (axis == "l_thumb_y") {
+            Y_pot = root["value"];
+            if (abs(Y_pot) < 125)
+                Y_pot = 0;
+        }
 
-    // TEMP VARIABLES
-    float nMotPremixL; // Motor (left)  premixed output        (-128..+127)
-    float nMotPremixR; // Motor (right) premixed output        (-128..+127)
-    int nPivSpeed; // Pivot Speed                          (-128..+127)
-    float fPivScale; // Balance scale b/w drive and pivot    (   0..1   )
+        // INPUTS
+        int nJoyX = map(X_pot, -500, 500, -512, 512); // Joystick X input                     (-128..+127)
+        int nJoyY = map(Y_pot, -500, 500, -512, 512);
+        ; // Joystick Y input                     (-128..+127)
 
-    // Calculate Drive Turn output due to Joystick X input
-    if (nJoyY >= 0) {
-        // Forward
-        nMotPremixL = (nJoyX >= 0) ? 1023.0 : (1023.0 + nJoyX);
-        nMotPremixR = (nJoyX >= 0) ? (1023.0 - nJoyX) : 1023.0;
-    } else {
-        // Reverse
-        nMotPremixL = (nJoyX >= 0) ? (1023.0 - nJoyX) : 1023.0;
-        nMotPremixR = (nJoyX >= 0) ? 1023.0 : (1023.0 + nJoyX);
-    }
+        // OUTPUTS
+        int nMotMixL; // Motor (left)  mixed output           (-128..+127)
+        int nMotMixR; // Motor (right) mixed output           (-128..+127)
 
-    // Scale Drive output due to Joystick Y input (throttle)
-    nMotPremixL = nMotPremixL * nJoyY / 1023.0;
-    nMotPremixR = nMotPremixR * nJoyY / 1023.0;
+        // CONFIG
+        // - fPivYLimt  : The threshold at which the pivot action starts
+        //                This threshold is measured in units on the Y-axis
+        //                away from the X-axis (Y=0). A greater value will assign
+        //                more of the joystick's range to pivot actions.
+        //                Allowable range: (0..+127)
+        float fPivYLimit = 72.0;
 
-    // Now calculate pivot amount
-    // - Strength of pivot (nPivSpeed) based on Joystick X input
-    // - Blending of pivot vs drive (fPivScale) based on Joystick Y input
-    nPivSpeed = nJoyX;
-    fPivScale = (abs(nJoyY) > fPivYLimit) ? 0.0 : (1.0 - abs(nJoyY) / fPivYLimit);
+        // TEMP VARIABLES
+        float nMotPremixL; // Motor (left)  premixed output        (-128..+127)
+        float nMotPremixR; // Motor (right) premixed output        (-128..+127)
+        int nPivSpeed; // Pivot Speed                          (-128..+127)
+        float fPivScale; // Balance scale b/w drive and pivot    (   0..1   )
 
-    // Calculate final mix of Drive and Pivot
-    nMotMixL = (1.0 - fPivScale) * nMotPremixL + fPivScale * (nPivSpeed);
-    nMotMixR = (1.0 - fPivScale) * nMotPremixR + fPivScale * (-nPivSpeed);
+        // Calculate Drive Turn output due to Joystick X input
+        if (nJoyY >= 0) {
+            // Forward
+            nMotPremixL = (nJoyX >= 0) ? 1023.0 : (1023.0 + nJoyX);
+            nMotPremixR = (nJoyX >= 0) ? (1023.0 - nJoyX) : 1023.0;
+        } else {
+            // Reverse
+            nMotPremixL = (nJoyX >= 0) ? (1023.0 - nJoyX) : 1023.0;
+            nMotPremixR = (nJoyX >= 0) ? 1023.0 : (1023.0 + nJoyX);
+        }
 
-    // nMotMixL = map(nMotMixL, -1024, 1014, -512, 512);
-    // nMotMixR = map(nMotMixR, -1024, 1014, -512, 512);
+        // Scale Drive output due to Joystick Y input (throttle)
+        nMotPremixL = nMotPremixL * nJoyY / 1023.0;
+        nMotPremixR = nMotPremixR * nJoyY / 1023.0;
 
+        // Now calculate pivot amount
+        // - Strength of pivot (nPivSpeed) based on Joystick X input
+        // - Blending of pivot vs drive (fPivScale) based on Joystick Y input
+        nPivSpeed = nJoyX;
+        fPivScale = (abs(nJoyY) > fPivYLimit) ? 0.0 : (1.0 - abs(nJoyY) / fPivYLimit);
 
-    // left motor output
-    if (nMotMixL < 0) {
-        digitalWrite(l_motor_A_pin, HIGH);
-        digitalWrite(l_motor_B_pin, LOW);
+        // Calculate final mix of Drive and Pivot
+        nMotMixL = (1.0 - fPivScale) * nMotPremixL + fPivScale * (nPivSpeed);
+        nMotMixR = (1.0 - fPivScale) * nMotPremixR + fPivScale * (-nPivSpeed);
 
+        // nMotMixL = map(nMotMixL, -1024, 1014, -512, 512);
+        // nMotMixR = map(nMotMixR, -1024, 1014, -512, 512);
 
-    } else {
-        digitalWrite(l_motor_A_pin, LOW);
-        digitalWrite(l_motor_B_pin, HIGH);
-    }
-     // right motor output
-    if (nMotMixR < 0) {
-        digitalWrite(r_motor_A_pin, LOW);
-        digitalWrite(r_motor_B_pin, HIGH);
+        // left motor output
+        if (nMotMixL < 0) {
+            digitalWrite(l_motor_A_pin, HIGH);
+            digitalWrite(l_motor_B_pin, LOW);
 
-    } else {
-        digitalWrite(r_motor_A_pin, HIGH);
-        digitalWrite(r_motor_B_pin, LOW);
-    }
+        } else {
+            digitalWrite(l_motor_A_pin, LOW);
+            digitalWrite(l_motor_B_pin, HIGH);
+        }
+        // right motor output
+        if (nMotMixR < 0) {
+            digitalWrite(r_motor_A_pin, LOW);
+            digitalWrite(r_motor_B_pin, HIGH);
 
-    // ledcWrite(r_motor_pwm_channel, abs(nMotMixR));
-    // ledcWrite(l_motor_pwm_channel, abs(nMotMixL));
+        } else {
+            digitalWrite(r_motor_A_pin, HIGH);
+            digitalWrite(r_motor_B_pin, LOW);
+        }
 
-    analogWrite(r_motor_pwm_pin, abs(nMotMixR));
-    analogWrite(l_motor_pwm_pin, abs(nMotMixL));
+        // ledcWrite(r_motor_pwm_channel, abs(nMotMixR));
+        // ledcWrite(l_motor_pwm_channel, abs(nMotMixL));
 
-    Serial.println("X axis:" + String(nJoyX) + " Y_axis:" + String(nJoyY));
-    Serial.println("L mot:" + String(nMotMixL) + " R mot:" + String(nMotMixR));
+        analogWrite(r_motor_pwm_pin, abs(nMotMixR));
+        analogWrite(l_motor_pwm_pin, abs(nMotMixL));
+    //}
+    //Serial.println("X axis:" + String(nJoyX) + " Y_axis:" + String(nJoyY));
+    //Serial.println("L mot:" + String(nMotMixL) + " R mot:" + String(nMotMixR));
     // if (axis == "right_trigger") {
     //     ledcWrite(motor_chanel, root["value"]);
     // }
