@@ -68,8 +68,6 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
     }
 
         String axis = root["axis"];
-        //Serial.println(axis);
-
         if (axis == "l_thumb_x") {
             X_pot = root["value"];
             if (abs(X_pot) < 125)
