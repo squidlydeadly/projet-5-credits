@@ -69,7 +69,6 @@ def sample_first_joystick():
         left_speed = 0
         right_speed = 0
 
-
         print('axis', axis, round(value*1000))
         if axis == "left_trigger":
             left_speed = value
@@ -77,7 +76,6 @@ def sample_first_joystick():
             right_speed = value
 
         #j.set_vibration(left_speed, right_speed)
-
 
         payload = json.dumps({"axis" : axis, "value": round(value*1000)} )
 
