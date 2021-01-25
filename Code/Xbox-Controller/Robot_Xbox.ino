@@ -59,13 +59,18 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
         inData += (char)payload[i];
     }
     //Serial.println();
-    Serial.println(topic);
-    Serial.println(inData);
+    //Serial.println(topic);
+    //Serial.println(inData);
     JsonObject& root = jsonBuffer.parseObject(inData);
 
     String axis = root["axis"];
     String button = root["button"];
-    if (axis) {
+
+    //Serial.println(axis);
+    //Serial.println(button);
+
+    if (axis != "") {
+        Serial.println("axis");
         if (axis == "l_thumb_x") {
             X_pot = root["value"];
             if (abs(X_pot) < 125)
@@ -76,12 +81,7 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
             if (abs(Y_pot) < 125)
                 Y_pot = 0;
         }
-    }
-    else if(button){
-        Serial.println("button");
-    }
-
-    // INPUTS
+// INPUTS
     int nJoyX = map(X_pot, -500, 500, -512, 512); // Joystick X input                     (-128..+127)
     int nJoyY = map(Y_pot, -500, 500, -512, 512);
     ; // Joystick Y input                     (-128..+127)
@@ -162,6 +162,18 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
     // if (axis == "right_trigger") {
     //     ledcWrite(motor_chanel, root["value"]);
     // }
+
+        
+    }
+
+
+
+
+    else if(button != ""){
+        Serial.println("button");
+    }
+
+    
 }
 
 void mqttconnect()

@@ -65,6 +65,15 @@ def sample_first_joystick():
     right_speed = 0
 
     @j.event
+    def on_button(button, release):
+        print('button', button, release)
+        #payload = json.dumps({"button" : button, "value": pressed } )
+        #client.publish("robot/button", payload)
+
+    left_speed = 0
+    right_speed = 0
+
+    @j.event
     def on_axis(axis, value):
         left_speed = 0
         right_speed = 0
@@ -84,7 +93,7 @@ def sample_first_joystick():
     while True:
         j.dispatch_events()
 
-        time.sleep(.01)
+        time.sleep(.1)
         if client.is_connected():
            
             print("disconnected")

@@ -3,6 +3,8 @@
         {
             "name": "Win32",
             "includePath": [
+                "C:\\Users\\alex\\Documents\\Arduino\\libraries\\**",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\**",
                 "C:\\Users\\alex\\AppData\\Local\\Arduino15\\packages\\adafruit\\tools\\**",
                 "C:\\Users\\alex\\AppData\\Local\\Arduino15\\packages\\adafruit\\hardware\\nrf52\\0.21.0\\**",
                 "C:\\Users\\alex\\AppData\\Local\\Arduino15\\packages\\esp8266\\tools\\**",
@@ -13,7 +15,10 @@
             "forcedInclude": [],
             "intelliSenseMode": "msvc-x64",
             "cStandard": "c17",
-            "cppStandard": "c++17"
+            "cppStandard": "c++17",
+            "defines": [
+                "USBCON"
+            ]
         }
     ],
     "version": 4
