@@ -34,6 +34,14 @@ colors = [Color('magenta', [255,0,255]),
           Color('bleu', [255,0,0]),
           Color('azur', [255,255,0]),
           Color('jaune', [0,255,255])]
+def color_by_name(name):
+    color_filtered = [color for color in colors if color.name==name]
+    if len(color_filtered) == 1:
+        return color_filtered[0]
+    else:
+        return None     
+    
+
 def inv_gray_scale_color(image,color):
     color_image= np.full_like(image,fill_value=color.BGR,dtype= np.uint8)
             
@@ -53,7 +61,9 @@ def get_position(image,template,color):
     inv_gray_scale = inv_gray_scale_color(image,color)
     top_left = get_position_top_left(inv_gray_scale,template)
     centre_template = get_template_center(w,h)
-    return top_left + centre_template
+    bottom_right = top_left + [h,w]
+    image_rec = cv2.rectangle(image, tuple(top_left),tuple(bottom_right) ,tuple(color_by_name("bleu").BGR) , 2)
+    return (top_left + centre_template),image_rec
 
 def get_template_center(w,h):
     return np.array([(w-1)/2,(h-1)/2])
@@ -73,9 +83,8 @@ def get_position_orientation(image, template, color):
     M = cv2.moments(sliced_image)
     cx = M['m10']/M['m00']
     cy = M['m01']/M['m00']
-    vec = centre_template - [cx,cy]   #inversion en y du au formatage des images en python
-    angle_deg= get_angle(vec)
-    return (position,angle_deg)
+    vec = centre_template - [cx,cy]  
+    return (position,vec)
     
 
 if __name__ == "__main__":
