@@ -23,14 +23,14 @@ PubSubClient client(espClient);
 //neopixel
 #define led_pin 17
 
-#define l_motor_pwm_pin 36
-int l_motor_pwm_channel = 0;
-#define l_motor_A_pin 39
-#define l_motor_B_pin 34
+#define l_motor_pwm_pin 12
+int l_motor_pwm_channel = 1;
+#define l_motor_A_pin 14
+#define l_motor_B_pin 24
 
-#define r_motor_pwm_pin 35
-int r_motor_pwm_channel = 1;
-#define r_motor_A_pin 32
+#define r_motor_pwm_pin   26
+int r_motor_pwm_channel = 2;
+#define r_motor_A_pin 25
 #define r_motor_B_pin 33
 
 const char* Axis_Topic = "robot/axis";
@@ -64,13 +64,13 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
     JsonObject& root = jsonBuffer.parseObject(inData);
 
     String axis = root["axis"];
-    String button = root["button"];
+    int button = root["button"];
 
     //Serial.println(axis);
     //Serial.println(button);
 
     if (axis != "") {
-        Serial.println("axis");
+        Serial.println(axis);
         if (axis == "l_thumb_x") {
             X_pot = root["value"];
             if (abs(X_pot) < 125)
@@ -81,6 +81,8 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
             if (abs(Y_pot) < 125)
                 Y_pot = 0;
         }
+
+    
 // INPUTS
     int nJoyX = map(X_pot, -500, 500, -512, 512); // Joystick X input                     (-128..+127)
     int nJoyY = map(Y_pot, -500, 500, -512, 512);
@@ -134,21 +136,21 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
 
     // left motor output
     if (nMotMixL < 0) {
-        digitalWrite(l_motor_A_pin, HIGH);
-        digitalWrite(l_motor_B_pin, LOW);
+        digitalWrite(l_motor_A_pin, 1);
+        digitalWrite(l_motor_B_pin, 0);
 
     } else {
-        digitalWrite(l_motor_A_pin, LOW);
-        digitalWrite(l_motor_B_pin, HIGH);
+        digitalWrite(l_motor_A_pin, 0);
+        digitalWrite(l_motor_B_pin, 1);
     }
     // right motor output
     if (nMotMixR < 0) {
-        digitalWrite(r_motor_A_pin, LOW);
-        digitalWrite(r_motor_B_pin, HIGH);
+        digitalWrite(r_motor_A_pin, 0);
+        digitalWrite(r_motor_B_pin, 1);
 
     } else {
-        digitalWrite(r_motor_A_pin, HIGH);
-        digitalWrite(r_motor_B_pin, LOW);
+        digitalWrite(r_motor_A_pin, 1);
+        digitalWrite(r_motor_B_pin, 0);
     }
 
      ledcWrite(r_motor_pwm_channel, abs(nMotMixR));
@@ -157,8 +159,8 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
     //analogWrite(r_motor_pwm_pin, abs(nMotMixR));
     //analogWrite(l_motor_pwm_pin, abs(nMotMixL));
     //}
-    //Serial.println("X axis:" + String(nJoyX) + " Y_axis:" + String(nJoyY));
-    //Serial.println("L mot:" + String(nMotMixL) + " R mot:" + String(nMotMixR));
+    Serial.println("X axis:" + String(nJoyX) + " Y_axis:" + String(nJoyY));
+    Serial.println("L mot:" + String(nMotMixL) + " R mot:" + String(nMotMixR));
     // if (axis == "right_trigger") {
     //     ledcWrite(motor_chanel, root["value"]);
     // }
@@ -167,10 +169,13 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
     }
 
 
-
-
-    else if(button != ""){
-        Serial.println("button");
+    else if(button != 0){
+        if(button == 13){
+            Serial.println(button);
+            Serial.println("kick !!!");
+            delay(150);
+        }
+        
     }
 
     
@@ -211,18 +216,18 @@ void setup()
     Serial.print("Connecting to ");
     Serial.println(ssid);
 
-    pinMode(led_pin, OUTPUT);
+    //pinMode(led_pin, OUTPUT);
 
-    pinMode(r_motor_pwm_pin, OUTPUT);
+    //pinMode(r_motor_pwm_pin, OUTPUT);
     pinMode(r_motor_A_pin, OUTPUT);
     pinMode(r_motor_B_pin, OUTPUT);
 
-    pinMode(l_motor_pwm_pin, OUTPUT);
+    //pinMode(l_motor_pwm_pin, OUTPUT);
     pinMode(l_motor_A_pin, OUTPUT);
     pinMode(l_motor_B_pin, OUTPUT);
 
     /* set led as output to control led on-off */
-     ledcSetup(0, 2000, 10);
+    ledcSetup(0, 2000, 10);
     
     ledcAttachPin(l_motor_pwm_pin, l_motor_pwm_channel);
     ledcAttachPin(r_motor_pwm_pin, r_motor_pwm_channel);

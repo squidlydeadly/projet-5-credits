@@ -374,7 +374,7 @@ def sample_first_joystick():
 
     while True:
         j.dispatch_events()
-        time.sleep(.01)
+        time.sleep(.1)
 
 if __name__ == "__main__":
     sample_first_joystick()

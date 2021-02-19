@@ -57,18 +57,19 @@ def sample_first_joystick():
 
     @j.event
     def on_button(button, pressed):
-        print('button', button, pressed)
+        print('button:', button, pressed)
         payload = json.dumps({"button" : button, "value": pressed } )
         client.publish("robot/button", payload)
+        time.sleep(0.1)
 
     left_speed = 0
     right_speed = 0
 
-    @j.event
-    def on_button(button, release):
-        print('button', button, release)
-        #payload = json.dumps({"button" : button, "value": pressed } )
-        #client.publish("robot/button", payload)
+    # @j.event
+    # def on_button(button, release):
+    #     print('button', button, release)
+    #     #payload = json.dumps({"button" : button, "value": pressed } )
+    #     #client.publish("robot/button", payload)
 
     left_speed = 0
     right_speed = 0
@@ -77,23 +78,25 @@ def sample_first_joystick():
     def on_axis(axis, value):
         left_speed = 0
         right_speed = 0
-
         print('axis', axis, round(value*1000))
-        if axis == "left_trigger":
-            left_speed = value
-        elif axis == "right_trigger":
-            right_speed = value
+        if abs(value *1000) >= 40:
+            
+            if axis == "left_trigger":
+                left_speed = value
+            elif axis == "right_trigger":
+                right_speed = value
 
-        #j.set_vibration(left_speed, right_speed)
+            #j.set_vibration(left_speed, right_speed)
+            
 
-        payload = json.dumps({"axis" : axis, "value": round(value*1000)} )
+            payload = json.dumps({"axis" : axis, "value": round(value*1000)} )
 
-        client.publish("robot/axis", payload)
+            client.publish("robot/axis", payload)
 
     while True:
         j.dispatch_events()
 
-        time.sleep(.1)
+        time.sleep(.05)
         if client.is_connected():
            
             print("disconnected")
