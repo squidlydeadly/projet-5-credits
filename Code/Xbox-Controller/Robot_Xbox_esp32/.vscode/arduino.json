@@ -1,5 +1,6 @@
 {
-    "board": "espressif:esp32:esp32",
-    "configuration": "FlashMode=qio,FlashFreq=80,FlashSize=4M,UploadSpeed=921600,DebugLevel=none",
-    "sketch": "Robot_Xbox_esp32.ino"
+    "board": "esp32:esp32:espea32",
+    "configuration": "FlashFreq=80,UploadSpeed=921600",
+    "sketch": "Robot_Xbox_esp32.ino",
+    "port": "COM4"
 }

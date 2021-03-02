@@ -7,6 +7,7 @@ So it willpublish temperature topic and scribe topic bulb on/off
 #include <ArduinoJson.h>
 #include <PubSubClient.h>
 #include <WiFi.h>
+#include <ESP32Servo.h>
 //#include <ESP8266WiFi.h>
 
 /* change it with your ssid-password */
@@ -21,17 +22,21 @@ const char* mqtt_server = "192.168.0.217";
 WiFiClient espClient;
 PubSubClient client(espClient);
 //neopixel
-#define led_pin 17
 
-#define l_motor_pwm_pin 12
+Servo myservo;
+
+#define servo_pin 21
+
+#define l_motor_pwm_pin 26
 int l_motor_pwm_channel = 1;
-#define l_motor_A_pin 14
-#define l_motor_B_pin 24
+#define l_motor_A_pin 25
+#define l_motor_B_pin 33
 
-#define r_motor_pwm_pin   26
+#define r_motor_pwm_pin   32
 int r_motor_pwm_channel = 2;
-#define r_motor_A_pin 25
-#define r_motor_B_pin 33
+#define r_motor_A_pin 11
+#define r_motor_B_pin 10
+
 
 const char* Axis_Topic = "robot/axis";
 const char* Button_Topic = "robot/button";
@@ -73,12 +78,12 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
         Serial.println(axis);
         if (axis == "l_thumb_x") {
             X_pot = root["value"];
-            if (abs(X_pot) < 125)
+            if (abs(X_pot) < 150)
                 X_pot = 0;
 
         } else if (axis == "l_thumb_y") {
             Y_pot = root["value"];
-            if (abs(Y_pot) < 125)
+            if (abs(Y_pot) < 150)
                 Y_pot = 0;
         }
 
@@ -173,7 +178,9 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
         if(button == 13){
             Serial.println(button);
             Serial.println("kick !!!");
-            delay(150);
+            myservo.write(0);
+            delay(250);
+            myservo.write(90);
         }
         
     }
@@ -231,6 +238,13 @@ void setup()
     
     ledcAttachPin(l_motor_pwm_pin, l_motor_pwm_channel);
     ledcAttachPin(r_motor_pwm_pin, r_motor_pwm_channel);
+    ESP32PWM::allocateTimer(0);
+	ESP32PWM::allocateTimer(1);
+	ESP32PWM::allocateTimer(2);
+	//ESP32PWM::allocateTimer(3);
+    myservo.setPeriodHertz(50);
+    //myservo.attach(servo_pin, 500, 2400);
+    myservo.write(0); 
 
     WiFi.begin(ssid, password);
 
