@@ -79,7 +79,7 @@ def sample_first_joystick():
         left_speed = 0
         right_speed = 0
         print('axis', axis, round(value*1000))
-        if abs(value *1000) >= 40:
+        if abs(value *1000) >= 10:
             
             if axis == "left_trigger":
                 left_speed = value
