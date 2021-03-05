@@ -46,6 +46,7 @@ def stage_camera(q_in,q_out,cam_id):
 
     while(True):
         t_start = time.perf_counter()
+        time.sleep(Configs.get()['CAMERA']['SLEEP'])
         if(not q_in.empty()):
             if q_in.get().kill:
                 q_out.put(PipeDataKill())
