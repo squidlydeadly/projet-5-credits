@@ -10,7 +10,7 @@ from paho.mqtt import client as mqtt_client
 import random
 import json
 
-broker = '10.42.0.1'
+broker = '1p0.42.0.1'
 port = 1883
 
 HUMANITY_1 = 'HUMANITY_1'
@@ -105,13 +105,13 @@ def sample_first_joystick():
             payload = json.dumps({"axis" : axis, "value": round(value*1000)} )
             client.publish(HUMANITY_2, payload)
 
-
+    print(sys.argv)
 
     while True:
         j0.dispatch_events()
         j1.dispatch_events()
 
-        time.sleep(.01)
+        time.sleep(.05)
         if client.is_connected():
            
             print("disconnected")
