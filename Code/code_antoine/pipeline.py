@@ -40,6 +40,10 @@ class Robot(ToDetect):
 
 def stage_camera(q_in,q_out,cam_id):
     vc = cv2.VideoCapture(cam_id)
+    vc.set(cv2.CAP_PROP_FPS,Configs.get()['CAMERA']['FPS'])
+    vc.set(cv2.CAP_PROP_FRAME_WIDTH,Configs.get()['CAMERA']['WIDTH'])
+    vc.set(cv2.CAP_PROP_FRAME_HEIGHT,Configs.get()['CAMERA']['HEIGHT'])
+
     while(True):
         t_start = time.perf_counter()
         if(not q_in.empty()):

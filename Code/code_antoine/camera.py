@@ -16,7 +16,7 @@ def stage_grab(q_in,q_out,vc):
             if q_in.get().kill:
                 q_out.put(PipeDataKill())
                 return
-        vc.grab()
+        print('grab' + str(vc.grab()))
         #print('wooting')
 def stage_retrieve(q_in,q_out,vc):
     while(True):
@@ -25,6 +25,7 @@ def stage_retrieve(q_in,q_out,vc):
                 q_out.put(PipeDataKill())
                 return
         r,img = vc.retrieve()
+        print('grab' + str(vc.grab()))
         q_out.put(PipeDataImg(img))
         #print('woot')
 class PipelineCamera:
