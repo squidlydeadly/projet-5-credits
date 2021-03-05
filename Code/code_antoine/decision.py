@@ -16,7 +16,7 @@ import numpy as np
 robot_radius = 5
 
 erreur_angle = 5
-erreur_distance = 2       
+erreur_distance = 2
 
 terain_width = 61
 
@@ -39,12 +39,12 @@ class RobotsIndex(Enum):
     HUMANITY_1 = 1
     SKYNET_0 = 2
     SKYNET_1 = 3
-    
+
 class State(Enum):
     SKYNET_POSSESSION = 0
     HUMANITY_POSSESSION = 1
     NO_ONE_POSSESSION = 2
-    
+
 def skynet_goal(robot_skynet):
     command = None
     if(not robot_skynet.possession_balle):
@@ -68,7 +68,7 @@ def skynet_defence(robot_skynet):
         #se rendre dans la zone des buts a reculon
         vecangle_direction_inv = VecAngle(-1*robot_skynet.direction.vec)
         diff_vecangle_but_direction_inv = VecAngleDiff(vecangle_direction_inv.angle,vecangle_robot_but)
-        
+
         commande = CommandeSkynet(robot_skynet.get_num(),
                                   angle=diff_vecangle_but_direction_inv.angle,
                                   is_clockwise=diff_vecangle_but_direction_inv.is_clockwise,
@@ -81,7 +81,7 @@ def skynet_defence(robot_skynet):
                                   is_clockwise=robot_skynet.diff_vecangle.is_clockwise)
     return command
 def skynet_fetch(robot_skynet):
-    
+
     return CommandeSkynet(robot_skynet.get_num(),
                           angle=robot_skynet.diff_vecangle.angle,
                           is_clockwise=robot_skynet.diff_vecangle.is_clockwise,
@@ -100,7 +100,7 @@ class RobotInfo:
         self.possession_balle = None
         self.vecangle_robot_balle = None
         self.diff_vecangle = None
-        
+
     def calculate_situation(self,position_balle):
         self.vecangle_robot_balle = VecAngle(position_balle - self.position)
         self.diff_vecangle = VecAngleDiff(self.vecangle_direction,self.vecangle_robot_balle)
@@ -108,20 +108,20 @@ class RobotInfo:
             self.get_distance_balle_robot() < erreur_distance
     def get_distance_balle_robot(self):
         return self.vecangle_robot_balle.get_norme() - robot_radius
-        
+
     def get_num(self):
         return self.robot_index.value%robots_par_equipe
     def get_equ(self):
         return Equipe(int(self.robot_index.value/robots_par_equipe))
-    
+
 class CommandIntensity:
     def __init__(self,clockwise_intensity=0,foward_intensity=0):
         self.clockwise_intensity = clockwise_intensity
         self.foward_intensity = foward_intensity
-    
+
 class CommandeSkynet:
 
-    
+
     def __init__(self,numero,angle=0,is_clockwise=True,grandeur=0,is_foward=True,kick=False):
         self.num = numero
         self.angle = angle
@@ -150,8 +150,8 @@ class InfoVision:
 def decision(info_vision):
     #calcule de la situation actuelle
     info_vision.calculate_situation()
-    
-    #determinaison du state
+
+    #determination du state
     state = None
     if(any([rob.possession_balle for rob in info_vision.robots_info if rob.get_equ() == Equipe.SKYNET])):
         state = State.SKYNET_POSSESSION
@@ -159,13 +159,13 @@ def decision(info_vision):
         state = State.HUMANITY_POSSESSION
     else:
         state = State.NO_ONE_POSSESSION
-        
+
     #comme une state machine mais modifié
     commandes = []
     for robot_skynet in [rob for rob in info_vision.robots_info if rob.get_equ() == Equipe.SKYNET]:
         commandes.append(StateMachineLike[state](robot_skynet))
     return commandes
-    
+
 
 
 
@@ -177,6 +177,5 @@ if __name__ == "__main__":
     new_info.robots_info.append(RobotInfo(np.array([61,0]), np.array([1,1]), RobotsIndex.HUMANITY_0))
     new_info.robots_info.append(RobotInfo(np.array([61,0]), np.array([1,1]), RobotsIndex.HUMANITY_1))
     commands = decision(new_info)
-    
+
     commands_intensity = [command.get_command_intesity() for command in commands]
-    
