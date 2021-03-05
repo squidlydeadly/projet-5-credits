@@ -10,9 +10,11 @@ from paho.mqtt import client as mqtt_client
 import random
 import json
 
-broker = '192.168.0.217'
+broker = '10.42.0.1'
 port = 1883
-topic = "desk/light"
+
+HUMANITY_1 = 'HUMANITY_1'
+HUMANITY_2 = 'HUMANITY_2'
 # generate client ID with pub prefix randomly
 client_id = f'python-mqtt-{random.randint(0, 100)}'
 
@@ -47,56 +49,69 @@ def sample_first_joystick():
     if not joysticks:
         sys.exit(0)
 
-    j = joysticks[0]
 
-    print('using %d' % j.device_number)
 
-    battery = j.get_battery_information()
+    j0 = joysticks[0]
+    print('using %d' % j0.device_number)
+    battery = j0.get_battery_information()
     print(battery)
 
-
-    @j.event
+    @j0.event
     def on_button(button, pressed):
-        print('button:', button, pressed)
+        print('humanity 1 button:', button, pressed)
         payload = json.dumps({"button" : button, "value": pressed } )
-        client.publish("robot/button", payload)
+        client.publish(HUMANITY_1, payload)
         time.sleep(0.1)
 
-    left_speed = 0
-    right_speed = 0
-
-    # @j.event
-    # def on_button(button, release):
-    #     print('button', button, release)
-    #     #payload = json.dumps({"button" : button, "value": pressed } )
-    #     #client.publish("robot/button", payload)
-
-    left_speed = 0
-    right_speed = 0
-
-    @j.event
+    @j0.event
     def on_axis(axis, value):
         left_speed = 0
         right_speed = 0
         print('axis', axis, round(value*1000))
         if abs(value *1000) >= 10:
-            
             if axis == "left_trigger":
                 left_speed = value
             elif axis == "right_trigger":
                 right_speed = value
-
-            #j.set_vibration(left_speed, right_speed)
-            
-
             payload = json.dumps({"axis" : axis, "value": round(value*1000)} )
+            client.publish(HUMANITY_1, payload)
 
-            client.publish("robot/axis", payload)
+
+
+
+
+    j1 = joysticks[1]
+    print('using %d' % j1.device_number)
+    battery = j1.get_battery_information()
+    print(battery)
+
+    @j1.event
+    def on_button(button, pressed):
+        print('humanity 2 button:', button, pressed)
+        payload = json.dumps({"button" : button, "value": pressed } )
+        client.publish(HUMANITY_2, payload)
+        time.sleep(0.1)
+
+    @j1.event
+    def on_axis(axis, value):
+        left_speed = 0
+        right_speed = 0
+        print('axis', axis, round(value*1000))
+        if abs(value *1000) >= 10:
+            if axis == "left_trigger":
+                left_speed = value
+            elif axis == "right_trigger":
+                right_speed = value
+            payload = json.dumps({"axis" : axis, "value": round(value*1000)} )
+            client.publish(HUMANITY_2, payload)
+
+
 
     while True:
-        j.dispatch_events()
+        j0.dispatch_events()
+        j1.dispatch_events()
 
-        time.sleep(.05)
+        time.sleep(.01)
         if client.is_connected():
            
             print("disconnected")

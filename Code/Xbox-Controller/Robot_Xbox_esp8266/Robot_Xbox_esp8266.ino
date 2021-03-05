@@ -16,7 +16,9 @@ const char* password = "rpi3_2356";
 /* this is the IP of PC/raspberry where you installed MQTT Server 
 on Wins use "ipconfig" 
 on Linux use "ifconfig" to get its IP address */
-const char* mqtt_server = "192.168.0.217";
+const char* mqtt_server = "10.42.0.1";
+
+#define ROBOT_NAME "HUMANITY_2"
 
 /* create an instance of PubSubClient client */
 WiFiClient espClient;
@@ -38,8 +40,6 @@ Servo kickservo;
 
 
 
-const char* Axis_Topic = "robot/axis";
-const char* Button_Topic = "robot/button";
 
 int motor_chanel = 0;
 
@@ -47,9 +47,10 @@ int X_pot = 0;
 int Y_pot = 0;
 
 /* topics */
-#define update_Topic "update"
-#define ROBO_AXIS_TOPIC "robot/axis"
-#define ROBO_BUTTON_TOPIC "robot/button"
+//#define update_Topic "update"
+//#define ROBO_AXIS_TOPIC "robot/axis"
+//define ROBO_BUTTON_TOPIC "robot/button"
+
 
 long lastMsg = 0;
 char msg[20];
@@ -192,11 +193,12 @@ void mqttconnect()
         if (client.connect(clientId.c_str())) {
             Serial.println("connected");
             /* subscribe topic with default QoS 0*/
-            client.subscribe(ROBO_AXIS_TOPIC);
-            client.subscribe(ROBO_BUTTON_TOPIC);
+            //client.subscribe(ROBO_AXIS_TOPIC);
+            //client.subscribe(ROBO_BUTTON_TOPIC);
+            client.subscribe(ROBOT_NAME);
 
-            client.publish(update_Topic, "1");
-            Serial.println("send update");
+            //client.publish(update_Topic, "1");
+            //Serial.println("send update");
 
         } else {
             Serial.print("failed, status code =");
