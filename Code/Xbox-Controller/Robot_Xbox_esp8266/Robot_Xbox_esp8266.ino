@@ -176,7 +176,7 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
             Serial.println(button);
             Serial.println("kick !!!");
             kickservo.write(0);
-            delay(250);
+            delay(180);
             kickservo.write(90);
         }
     }
@@ -188,7 +188,7 @@ void mqttconnect()
     while (!client.connected()) {
         Serial.print("MQTT connecting ...");
         /* client ID */
-        String clientId = "ESP32Client";
+        String clientId = ROBOT_NAME;
         /* connect now */
         if (client.connect(clientId.c_str())) {
             Serial.println("connected");
