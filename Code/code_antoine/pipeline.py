@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Created on Fri Jan 29 01:35:20 2021
@@ -19,6 +18,9 @@ import vision
 import decision
 import copy
 
+from pipedata import *
+
+from config_loader import Configs
 
 class ToDetect:
     def __init__(self,color):
@@ -34,38 +36,28 @@ class Robot(ToDetect):
         super().__init__(color)
         self.index = index
 
-class PipeData:
-    def __init__(self,kill=False):
-        self.kill = kill
 
-class PipeDataKill(PipeData):
-    def __init__(self):
-        super().__init__(True)
-
-
-class PipeDataImg(PipeData):
-    def __init__(self,img=[]):
-        super().__init__()
-        self.img = img
-
-class PipeDataVisionInfo(PipeData):
-    def __init__(self,vision_info):
-        super().__init__()
-        self.vision_info = vision_info
 
 def stage_camera(q_in,q_out,cam_id):
     vc = cv2.VideoCapture(cam_id)
+    vc.set(cv2.CAP_PROP_FPS,Configs.get()['CAMERA']['FPS'])
+    vc.set(cv2.CAP_PROP_FRAME_WIDTH,Configs.get()['CAMERA']['WIDTH'])
+    vc.set(cv2.CAP_PROP_FRAME_HEIGHT,Configs.get()['CAMERA']['HEIGHT'])
+
     while(True):
+        t_start = time.perf_counter()
         if(not q_in.empty()):
             if q_in.get().kill:
                 q_out.put(PipeDataKill())
                 return
         rval,img = vc.read()
+        print('camera' + str(time.perf_counter() - t_start))
         q_out.put(PipeDataImg(img))
 
 def stage_vision(q_in,q_out,q_display,template_robot,template_balle,mask,to_detects):
     while(True):
         pipe_data_img = q_in.get()
+        t_start = time.perf_counter()
         if pipe_data_img.kill :
             q_out.put(PipeDataKill())
             return
@@ -86,6 +78,7 @@ def stage_vision(q_in,q_out,q_display,template_robot,template_balle,mask,to_dete
                 vision_info.robots_info.append(decision.RobotInfo(position,
                                                                   direction_vec,
                                                                   to_detect.index))
+        print('vision' + str(time.perf_counter() - t_start))
         q_display.put(PipeDataImg(img_rec))
         q_out.put(PipeDataVisionInfo(vision_info))
 
@@ -131,15 +124,15 @@ if __name__ == '__main__':
             self.panel.pack(side = "top")
             template = cv2.imread('images/symboleBlanc.png',cv2.IMREAD_GRAYSCALE)
             mask = cv2.imread('images/mask.png',cv2.IMREAD_GRAYSCALE)
-            self.pipeline = Pipeline(2,template,template,mask,to_detect)
+            self.pipeline = Pipeline(Configs.get()['CAMERA']['ID'],template,template,mask,to_detect)
             self.queue_dis,self.queue_dec = self.pipeline.start()
             self.refresh_label()
 
         def refresh_label(self):
             new_val_img = self.queue_dis.get()
             self.image = Image.fromarray(new_val_img.img[:,:,::-1])
-            new_val_dec = self.queue_dec.get()
-            print(new_val_dec.vision_info.robots_info[0].vecangle_direction.vec)
+            #new_val_dec = self.queue_dec.get()
+            #print(new_val_dec.vision_info.robots_info[0].vecangle_direction.vec)
             self.imgtk=ImageTk.PhotoImage(image=self.image)
             self.panel.configure(image=self.imgtk)
             self.parent.after(2, self.refresh_label)

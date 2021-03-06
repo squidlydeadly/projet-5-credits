@@ -2,7 +2,7 @@ installation du logiciel
 
 nécessaire:
 python <=3.7
-pip <= 1.9
+pip <= 19.3
 1) cloner le git
 
 2) se diriger dans le dossier Code/code-antoine
