@@ -1,9 +1,3 @@
-/* Here ESP32 will keep 2 roles: 
-1/ read data from DHT11/DHT22 sensor
-2/ control led on-off
-So it willpublish temperature topic and scribe topic bulb on/off
-*/
-
 #include <ArduinoJson.h>
 #include <PubSubClient.h>
 //#include <WiFi.h>
@@ -11,14 +5,18 @@ So it willpublish temperature topic and scribe topic bulb on/off
 #include <Servo.h>
 
 /* change it with your ssid-password */
-const char* ssid = "rasp_wifi";
-const char* password = "rpi3_2356";
+const char* ssid = "COGECO-2D80";
+const char* password = "028151303108";
 /* this is the IP of PC/raspberry where you installed MQTT Server 
 on Wins use "ipconfig" 
 on Linux use "ifconfig" to get its IP address */
 const char* mqtt_server = "10.42.0.1";
+const int port = 1883;
 
-#define ROBOT_NAME "HUMANITY_2"
+#define ROBOT_NAME "HUMANITY_1"
+//#define ROBOT_NAME "HUMANITY_2"
+//#define ROBOT_NAME "SKYNET_1"
+//#define ROBOT_NAME "SKYNET_2"
 
 /* create an instance of PubSubClient client */
 WiFiClient espClient;
@@ -37,9 +35,6 @@ Servo kickservo;
 //int r_motor_pwm_channel = 2;
 #define r_motor_A_pin D4
 #define r_motor_B_pin D5
-
-
-
 
 int motor_chanel = 0;
 
@@ -61,7 +56,6 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
     StaticJsonBuffer<200> jsonBuffer;
 
     for (int i = 0; i < length; i++) {
-        //Serial.print((char)payload[i]);
         inData += (char)payload[i];
     }
     //Serial.println();
@@ -72,21 +66,12 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
     String axis = root["axis"];
     int button = root["button"];
 
-    //Serial.println(axis);
-    //Serial.println(button);
-
     if (axis != "") {
-        Serial.println(axis);
-        if (axis == "l_thumb_x") {
-            X_pot = root["value"];
-            if (abs(X_pot) < 200)
-                X_pot = 0;
 
-        } else if (axis == "l_thumb_y") {
-            Y_pot = root["value"];
-            if (abs(Y_pot) < 200)
-                Y_pot = 0;
-        }
+        X_pot = root["x_axis"];
+        Y_pot = root["y_axis"];
+ 
+
         // INPUTS
         int nJoyX = map(X_pot, -500, 500, -512, 512); // Joystick X input                     (-128..+127)
         int nJoyY = map(Y_pot, -500, 500, -512, 512);
@@ -101,8 +86,8 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
         //                This threshold is measured in units on the Y-axis
         //                away from the X-axis (Y=0). A greater value will assign
         //                more of the joystick's range to pivot actions.
-        //                Allowable range: (0..+127)
-        float fPivYLimit = 400;
+        //                Allowable range: (0..+512)
+        float fPivYLimit = 450;
 
         // TEMP VARIABLES
         float nMotPremixL; // Motor (left)  premixed output        (-128..+127)
@@ -135,8 +120,8 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
         nMotMixL = (1.0 - fPivScale) * nMotPremixL + fPivScale * (nPivSpeed);
         nMotMixR = (1.0 - fPivScale) * nMotPremixR + fPivScale * (-nPivSpeed);
 
-        // nMotMixL = map(nMotMixL, -1024, 1014, -512, 512);
-        // nMotMixR = map(nMotMixR, -1024, 1014, -512, 512);
+        // nMotMixL = map(nMotMixL, -1024, 1023, -512, 512);
+        // nMotMixR = map(nMotMixR, -1024, 1023, -512, 512);
 
         // left motor output
         if (nMotMixL < 0) {
@@ -157,17 +142,19 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
             digitalWrite(r_motor_B_pin, LOW);
         }
 
+
+        // for esp32
         // ledcWrite(r_motor_pwm_channel, abs(nMotMixR));
         // ledcWrite(l_motor_pwm_channel, abs(nMotMixL));
 
+        //for esp8266
         analogWrite(r_motor_pwm_pin, abs(nMotMixR));
         analogWrite(l_motor_pwm_pin, abs(nMotMixL));
-        //}
+        
+
         //Serial.println("X axis:" + String(nJoyX) + " Y_axis:" + String(nJoyY));
-        //Serial.println("L mot:" + String(nMotMixL) + " R mot:" + String(nMotMixR));
-        // if (axis == "right_trigger") {
-        //     ledcWrite(motor_chanel, root["value"]);
-        // }
+        Serial.println("L mot:" + String(nMotMixL) + " R mot:" + String(nMotMixR));
+
 
     }
 
@@ -192,13 +179,8 @@ void mqttconnect()
         /* connect now */
         if (client.connect(clientId.c_str())) {
             Serial.println("connected");
-            /* subscribe topic with default QoS 0*/
-            //client.subscribe(ROBO_AXIS_TOPIC);
-            //client.subscribe(ROBO_BUTTON_TOPIC);
-            client.subscribe(ROBOT_NAME);
 
-            //client.publish(update_Topic, "1");
-            //Serial.println("send update");
+            client.subscribe(ROBOT_NAME);
 
         } else {
             Serial.print("failed, status code =");
@@ -213,11 +195,9 @@ void mqttconnect()
 void setup()
 {
     Serial.begin(115200);
-    // We start by connecting to a WiFi network
     Serial.println();
     Serial.print("Connecting to ");
     Serial.println(ssid);
-
 
     kickservo.attach(servo_pin);
     kickservo.write(0);
@@ -249,7 +229,7 @@ void setup()
     Serial.println(WiFi.localIP());
 
     /* configure the MQTT server with IPaddress and port */
-    client.setServer(mqtt_server, 1883);
+    client.setServer(mqtt_server, port);
     /* this receivedCallback function will be invoked 
   when client received subscribed topic */
     client.setCallback(receivedCallback);
@@ -262,6 +242,5 @@ void loop()
     if (!client.connected()) {
         mqttconnect();
     }
-
     client.loop();
 }
