@@ -10,8 +10,8 @@ try:
     robot_number = sys.argv[1]
 except :
     print("Specify robot name")
-    print("1 - HUMANITY_1")
-    print("2 - HUMANITY_2")
+    print("1 -> HUMANITY_1")
+    print("2 -> HUMANITY_2")
     exit()
 
 robotName = "HUMANITY_" + robot_number
@@ -30,7 +30,7 @@ def connect_mqtt()-> mqtt_client:
 
     client = mqtt_client.Client(client_id)
     client.on_connect = on_connect
-    client.connect(broker, port,keepalive = keepalive)
+    client.connect(broker, port, keepalive = keepalive)
     return client
 
 client = connect_mqtt()
@@ -44,7 +44,7 @@ def on_button_pressed(button):
 
 def on_button_released(button):
     print('Button {0} was released'.format(button.name))
-
+    
 
 def on_axis_moved(axis):
     x_axis = round(axis.x * 500)
