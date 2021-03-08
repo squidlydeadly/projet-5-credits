@@ -19,6 +19,7 @@ robotName = "HUMANITY_" + robot_number
 broker = "localhost"
 port = 1883
 client_id = "CONTROLLER OF " + robotName
+keepalive = 5000
 
 def connect_mqtt()-> mqtt_client:
     def on_connect(client,userdata,flags,rc):
@@ -29,7 +30,7 @@ def connect_mqtt()-> mqtt_client:
 
     client = mqtt_client.Client(client_id)
     client.on_connect = on_connect
-    client.connect(broker, port,keepalive= 1000)
+    client.connect(broker, port,keepalive = keepalive)
     return client
 
 client = connect_mqtt()
@@ -38,8 +39,6 @@ def on_button_pressed(button):
     print('Button {0} was pressed'.format(button.name))
 
     payload = json.dumps({"button" : 13, "value" : 1})
-
-    #client.connect(broker, port)
     client.publish(robotName, payload)
 
 
@@ -48,7 +47,6 @@ def on_button_released(button):
 
 
 def on_axis_moved(axis):
-
     x_axis = round(axis.x * 500)
     y_axis = round(axis.y * -500)
 
@@ -60,10 +58,7 @@ def on_axis_moved(axis):
     print('Axis {0} moved to {1} {2}'.format(axis.name, x_axis, y_axis))
 
     payload = json.dumps({"axis" : axis.name , "x_axis" :x_axis , "y_axis" : y_axis})
-
-    #client.connect(broker, port)
     client.publish(robotName, payload)
-
 
 try:
     with Xbox360Controller(int(robot_number) - 1, axis_threshold=0.2) as controller:
@@ -73,11 +68,7 @@ try:
 
         # Left and right axis move event
         controller.axis_l.when_moved = on_axis_moved
-        #controller.axis_r.when_moved = on_axis_moved
-
         signal.pause()
-    print("hahhahahhahahah")
-    client.loop_forever()
-       
+
 except KeyboardInterrupt:
     pass

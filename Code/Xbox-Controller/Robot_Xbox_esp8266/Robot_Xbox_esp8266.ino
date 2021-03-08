@@ -10,8 +10,8 @@ const char* password = "028151303108";
 /* this is the IP of PC/raspberry where you installed MQTT Server 
 on Wins use "ipconfig" 
 on Linux use "ifconfig" to get its IP address */
-const char* mqtt_server = "10.42.0.1";
-const int port = 1883;
+const char* mqtt_server = "192.168.0.194";
+const int port = 1884;
 
 #define ROBOT_NAME "HUMANITY_1"
 //#define ROBOT_NAME "HUMANITY_2"
@@ -52,6 +52,7 @@ char msg[20];
 
 void receivedCallback(char* topic, byte* payload, unsigned int length)
 {
+    lastMsg = micros();
     String inData;
     StaticJsonBuffer<200> jsonBuffer;
 
@@ -142,7 +143,6 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
             digitalWrite(r_motor_B_pin, LOW);
         }
 
-
         // for esp32
         // ledcWrite(r_motor_pwm_channel, abs(nMotMixR));
         // ledcWrite(l_motor_pwm_channel, abs(nMotMixL));
@@ -151,11 +151,8 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
         analogWrite(r_motor_pwm_pin, abs(nMotMixR));
         analogWrite(l_motor_pwm_pin, abs(nMotMixL));
         
-
         //Serial.println("X axis:" + String(nJoyX) + " Y_axis:" + String(nJoyY));
-        Serial.println("L mot:" + String(nMotMixL) + " R mot:" + String(nMotMixR));
-
-
+        Serial.println("L_mot:" + String(nMotMixL) + " R_mot:" + String(nMotMixR) + " compute time: " + String(micros() - lastMsg) );
     }
 
     else if (button != 0) {
