@@ -10,8 +10,8 @@ try:
     robot_number = sys.argv[1]
 except :
     print("Specify robot name")
+    print("0 -> HUMANITY_0")
     print("1 -> HUMANITY_1")
-    print("2 -> HUMANITY_2")
     exit()
 
 robotName = "HUMANITY_" + robot_number
@@ -44,7 +44,7 @@ def on_button_pressed(button):
 
 def on_button_released(button):
     print('Button {0} was released'.format(button.name))
-    
+
 
 def on_axis_moved(axis):
     x_axis = round(axis.x * 500)
@@ -61,7 +61,7 @@ def on_axis_moved(axis):
     client.publish(robotName, payload)
 
 try:
-    with Xbox360Controller(int(robot_number) - 1, axis_threshold=0.2) as controller:
+    with Xbox360Controller(int(robot_number), axis_threshold=0.2) as controller:
         # Button A events
         controller.button_a.when_pressed = on_button_pressed
         controller.button_a.when_released = on_button_released

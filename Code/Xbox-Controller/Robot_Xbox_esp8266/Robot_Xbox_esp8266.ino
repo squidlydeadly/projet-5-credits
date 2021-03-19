@@ -7,8 +7,8 @@
 /* change it with your ssid-password */
 const char* ssid = "COGECO-2D80";
 const char* password = "028151303108";
-/* this is the IP of PC/raspberry where you installed MQTT Server 
-on Wins use "ipconfig" 
+/* this is the IP of PC/raspberry where you installed MQTT Server
+on Wins use "ipconfig"
 on Linux use "ifconfig" to get its IP address */
 const char* mqtt_server = "192.168.0.194";
 const int port = 1884;
@@ -71,7 +71,7 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
 
         X_pot = root["x_axis"];
         Y_pot = root["y_axis"];
- 
+
 
         // INPUTS
         int nJoyX = map(X_pot, -500, 500, -512, 512); // Joystick X input                     (-128..+127)
@@ -150,12 +150,12 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
         //for esp8266
         analogWrite(r_motor_pwm_pin, abs(nMotMixR));
         analogWrite(l_motor_pwm_pin, abs(nMotMixL));
-        
+
         //Serial.println("X axis:" + String(nJoyX) + " Y_axis:" + String(nJoyY));
         Serial.println("L_mot:" + String(nMotMixL) + " R_mot:" + String(nMotMixR) + " compute time: " + String(micros() - lastMsg) );
     }
 
-    else if (button != 0) {
+     if (button != 0) {
         if (button == 13) {
             Serial.println(button);
             Serial.println("kick !!!");
@@ -227,7 +227,7 @@ void setup()
 
     /* configure the MQTT server with IPaddress and port */
     client.setServer(mqtt_server, port);
-    /* this receivedCallback function will be invoked 
+    /* this receivedCallback function will be invoked
   when client received subscribed topic */
     client.setCallback(receivedCallback);
     /*start DHT sensor */

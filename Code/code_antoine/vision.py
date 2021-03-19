@@ -33,7 +33,11 @@ colors = [Color('magenta', [255,0,255]),
           Color('vert', [0,255,0]),
           Color('bleu', [255,0,0]),
           Color('azur', [255,255,0]),
-          Color('jaune', [0,255,255])]
+          Color('jaune', [0,255,255]),
+          Color('rouge', [0,0,255]),
+          Color('orange',[0,165,255]),
+          Color('blanc',[255,255,255]),
+          Color('noir',[0,0,0])]
 def color_by_name(name):
     color_filtered = [color for color in colors if color.name==name]
     if len(color_filtered) == 1:
@@ -64,9 +68,9 @@ def get_position(image,template,color):
     inv_gray_scale = inv_gray_scale_color(image,color)
     top_left = get_position_top_left(inv_gray_scale,template)
     centre_template = get_template_center(w,h)
-    bottom_right = top_left + [h,w]
-    image_rec = cv2.rectangle(image, tuple(top_left),tuple(bottom_right) ,color.BGR , 2)
-    return (top_left + centre_template),image_rec
+    bottom_right = top_left + [w,h]
+    rect_dict = {'top_left':tuple(top_left),'bottom_right':tuple(bottom_right),'bgr':color.BGR}
+    return top_left + centre_template,rect_dict
 
 def get_template_center(w,h):
     return np.array([(w-1)/2,(h-1)/2])
@@ -92,10 +96,10 @@ def get_position_orientation(image, template,mask, color):
     cy = M['m01']/M['m00']
     vec = centre_template - [cx,cy]
     mass_center = position + vec
-    image_rec = cv2.rectangle(image, tuple(top_left),tuple(bottom_right) ,color.BGR ,2)
-    image_rec_line = cv2.line(image_rec,tuple(position.astype(int)),tuple(mass_center.astype(int)),[255,255,255])
+    rect_dict = {'top_left':tuple(top_left),'bottom_right':tuple(bottom_right),'bgr':color.BGR}
+    line_dict = {'start':tuple(position.astype(int)),'end':tuple(mass_center.astype(int)),'bgr':color.BGR}
 
-    return (position,vec,image_rec_line)
+    return (position,vec,rect_dict,line_dict)
 
 
 if __name__ == "__main__":
@@ -111,7 +115,7 @@ if __name__ == "__main__":
             print(color.name + str(position) + ' ' + str(orientation))
     t_stop = time.perf_counter()
     b,g,r = cv2.split(image)       # get b,g,r
-    plt.imshow(img_out[:,:,::-1]) 
+    plt.imshow(img_out[:,:,::-1])
     plt.imsave('img_out.jpg',img_out)
     t_delta = t_stop - t_start
     print("temps par iteration= " + str(t_delta/(n*len(colors))))

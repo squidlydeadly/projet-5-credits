@@ -11,3 +11,5 @@ class Configs:
         if Configs.__instance == None:
             Configs()
         return Configs.__instance
+if __name__ == "__main__":
+    print(Configs.get()['ROBOTS'][0])

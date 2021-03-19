@@ -17,6 +17,7 @@ from multiprocessing import Process,Queue
 import vision
 import decision
 import copy
+import publisher
 
 from pipedata import *
 
@@ -52,7 +53,7 @@ def stage_camera(q_in,q_out,cam_id):
                 q_out.put(PipeDataKill())
                 return
         rval,img = vc.read()
-        print('camera' + str(time.perf_counter() - t_start))
+        #print('camera ' + str(time.perf_counter() - t_start))
         q_out.put(PipeDataImg(img))
 
 def stage_vision(q_in,q_out,q_display,template_robot,template_balle,mask,to_detects):
@@ -63,28 +64,50 @@ def stage_vision(q_in,q_out,q_display,template_robot,template_balle,mask,to_dete
             q_out.put(PipeDataKill())
             return
         vision_info = decision.InfoVision()
+        rectangles =[]
+        lines = []
         for to_detect in to_detects:
             if type(to_detect) is Ball:
-                position,img_rec = vision.get_position(pipe_data_img.img,
+                #print('Ball')
+                position,rect_dict = vision.get_position(pipe_data_img.img,
                                                                 template_balle,
                                                                 to_detect.color)
-                vision_info.position_ball = position
+                #print(position)
+                vision_info.position_balle = position
+                rectangles.append(rect_dict)
 
 
             else:
-                position,direction_vec,img_rec= vision.get_position_orientation(pipe_data_img.img,
+                position,direction_vec,rect_dict,line_dict= vision.get_position_orientation(pipe_data_img.img,
                                                                template_robot,
                                                                mask,
                                                                to_detect.color)
                 vision_info.robots_info.append(decision.RobotInfo(position,
                                                                   direction_vec,
                                                                   to_detect.index))
-        print('vision' + str(time.perf_counter() - t_start))
-        q_display.put(PipeDataImg(img_rec))
+                lines.append(line_dict)
+                rectangles.append(rect_dict)
+        #print('vision ' + str(time.perf_counter() - t_start))
+        for rect in rectangles:
+            cv2.rectangle(pipe_data_img.img, rect['top_left'],rect['bottom_right'] ,rect['bgr'] ,2)
+        for line in lines:
+            cv2.line(pipe_data_img.img, line['start'],line['end'] ,line['bgr'] ,2)
+        q_display.put(PipeDataImg(pipe_data_img.img))
         q_out.put(PipeDataVisionInfo(vision_info))
 
+def stage_dec_and_pub(q_in,mqtt_client):
+    while(True):
+        pipe_data_infovision = q_in.get()
+        t_start = time.perf_counter()
+        if pipe_data_infovision.kill:
+            return
+        commands = decision.decision(pipe_data_infovision.vision_info)
+        for command in commands:
+            publisher.publish_CommandSkynet(mqtt_client,command)
+        #print('dec_and_pub ' + str(time.perf_counter() - t_start))
+
 class Pipeline:
-    def __init__(self,cam_id,template_robot,template_balle,mask,to_detects):
+    def __init__(self,cam_id,template_robot,template_balle,mask,to_detects,mqtt_client):
         self.q_to_stage_camera = Queue()
         self.q_to_display = Queue()
         self.q_to_stage_vision = Queue()
@@ -100,11 +123,14 @@ class Pipeline:
                                                                template_balle,
                                                                mask,
                                                                to_detects))
+        self.stage_dec_and_pub = Process(target=stage_dec_and_pub, args=(self.q_to_stage_decision,
+                                                                        mqtt_client))
 
     def start(self):
         self.stage_camera.start()
         self.stage_vision.start()
-        return self.q_to_display,self.q_to_stage_decision
+        self.stage_dec_and_pub.start()
+        return self.q_to_display
     def kill(self):
         self.q_to_stage_camera.put(PipeDataKill())
 
@@ -119,21 +145,17 @@ if __name__ == '__main__':
 
 
     class pipeline_and_display:
-        def __init__(self, parent,to_detect):
+        def __init__(self, parent,to_detect,robot_template,ball_template,robot_mask,mqtt_client):
             self.parent = parent
             self.panel = tk.Label(self.parent)
             self.panel.pack(side = "top")
-            template = cv2.imread('images/symboleBlanc.png',cv2.IMREAD_GRAYSCALE)
-            mask = cv2.imread('images/mask.png',cv2.IMREAD_GRAYSCALE)
-            self.pipeline = Pipeline(Configs.get()['CAMERA']['ID'],template,template,mask,to_detect)
-            self.queue_dis,self.queue_dec = self.pipeline.start()
+            self.pipeline = Pipeline(Configs.get()['CAMERA']['ID'],robot_template,ball_template,robot_mask,to_detect,mqtt_client)
+            self.queue_display = self.pipeline.start()
             self.refresh_label()
 
         def refresh_label(self):
-            new_val_img = self.queue_dis.get()
+            new_val_img = self.queue_display.get()
             self.image = Image.fromarray(new_val_img.img[:,:,::-1])
-            #new_val_dec = self.queue_dec.get()
-            #print(new_val_dec.vision_info.robots_info[0].vecangle_direction.vec)
             self.imgtk=ImageTk.PhotoImage(image=self.image)
             self.panel.configure(image=self.imgtk)
             self.parent.after(2, self.refresh_label)
@@ -142,7 +164,10 @@ if __name__ == '__main__':
         mouv_detect.pipeline.kill()
         root.destroy()
 
+    client = publisher.start_skynet_client()
     root = tk.Tk()
     root.protocol("WM_DELETE_WINDOW", on_closing)
-    mouv_detect = pipeline_and_display(root,[Robot(vision.color_by_name('bleu'),decision.RobotsIndex.HUMANITY_1),Robot(vision.color_by_name('magenta'),decision.RobotsIndex.HUMANITY_0)])
+    mouv_detect = pipeline_and_display(root,[Robot(vision.color_by_name('orange'),decision.RobotsIndex.HUMANITY_1),
+                                            Robot(vision.color_by_name('magenta'),decision.RobotsIndex.SKYNET_0),
+                                            Ball(vision.color_by_name('vert'))],client)
     root.mainloop()
