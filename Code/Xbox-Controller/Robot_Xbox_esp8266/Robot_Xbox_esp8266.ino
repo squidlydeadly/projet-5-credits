@@ -5,18 +5,20 @@
 #include <Servo.h>
 
 /* change it with your ssid-password */
-const char* ssid = "COGECO-2D80";
-const char* password = "028151303108";
+//const char* ssid = "COGECO-2D80";
+const char* ssid = "TP-Link_90B4";
+//const char* password = "028151303108";
+const char* password = "64460826";
 /* this is the IP of PC/raspberry where you installed MQTT Server
 on Wins use "ipconfig"
 on Linux use "ifconfig" to get its IP address */
 const char* mqtt_server = "192.168.0.194";
 const int port = 1884;
 
-#define ROBOT_NAME "HUMANITY_1"
-//#define ROBOT_NAME "HUMANITY_2"
+#define ROBOT_NAME "HUMANITY_0"
+//#define ROBOT_NAME "HUMANITY_1"
+//#define ROBOT_NAME "SKYNET_0"
 //#define ROBOT_NAME "SKYNET_1"
-//#define ROBOT_NAME "SKYNET_2"
 
 /* create an instance of PubSubClient client */
 WiFiClient espClient;
