@@ -10,10 +10,11 @@ from paho.mqtt import client as mqtt_client
 import random
 import json
 
-broker = '10.42.0.1'
-port = 1883
+broker = '192.168.0.198'
+port = 1884
 
 HUMANITY_X = 'HUMANITY_'+ str(int(sys.argv[1]) + 1)
+print(HUMANITY_X)
 
 # generate client ID with pub prefix randomly
 client_id = f'python-mqtt-{random.randint(0, 100)}'

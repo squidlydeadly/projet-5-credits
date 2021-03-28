@@ -5,18 +5,20 @@
 #include <Servo.h>
 
 /* change it with your ssid-password */
-const char* ssid = "COGECO-2D80";
-const char* password = "028151303108";
-/* this is the IP of PC/raspberry where you installed MQTT Server 
-on Wins use "ipconfig" 
+//const char* ssid = "COGECO-2D80";
+const char* ssid = "TP-Link_90B4";
+//const char* password = "028151303108";
+const char* password = "64460826";
+/* this is the IP of PC/raspberry where you installed MQTT Server
+on Wins use "ipconfig"
 on Linux use "ifconfig" to get its IP address */
-const char* mqtt_server = "192.168.0.194";
+const char* mqtt_server = "192.168.0.198";
 const int port = 1884;
 
+//#define ROBOT_NAME "HUMANITY_0"
 #define ROBOT_NAME "HUMANITY_1"
-//#define ROBOT_NAME "HUMANITY_2"
+//#define ROBOT_NAME "SKYNET_0"
 //#define ROBOT_NAME "SKYNET_1"
-//#define ROBOT_NAME "SKYNET_2"
 
 /* create an instance of PubSubClient client */
 WiFiClient espClient;
@@ -71,7 +73,7 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
 
         X_pot = root["x_axis"];
         Y_pot = root["y_axis"];
- 
+
 
         // INPUTS
         int nJoyX = map(X_pot, -500, 500, -512, 512); // Joystick X input                     (-128..+127)
@@ -121,8 +123,8 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
         nMotMixL = (1.0 - fPivScale) * nMotPremixL + fPivScale * (nPivSpeed);
         nMotMixR = (1.0 - fPivScale) * nMotPremixR + fPivScale * (-nPivSpeed);
 
-        // nMotMixL = map(nMotMixL, -1024, 1023, -512, 512);
-        // nMotMixR = map(nMotMixR, -1024, 1023, -512, 512);
+         nMotMixL = map(nMotMixL, -512, 512, -700, 700);
+         nMotMixR = map(nMotMixR, -512, 512, -700, 700);
 
         // left motor output
         if (nMotMixL < 0) {
@@ -150,12 +152,12 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
         //for esp8266
         analogWrite(r_motor_pwm_pin, abs(nMotMixR));
         analogWrite(l_motor_pwm_pin, abs(nMotMixL));
-        
+
         //Serial.println("X axis:" + String(nJoyX) + " Y_axis:" + String(nJoyY));
         Serial.println("L_mot:" + String(nMotMixL) + " R_mot:" + String(nMotMixR) + " compute time: " + String(micros() - lastMsg) );
     }
 
-    else if (button != 0) {
+     else if (button != 0) {
         if (button == 13) {
             Serial.println(button);
             Serial.println("kick !!!");
@@ -227,7 +229,7 @@ void setup()
 
     /* configure the MQTT server with IPaddress and port */
     client.setServer(mqtt_server, port);
-    /* this receivedCallback function will be invoked 
+    /* this receivedCallback function will be invoked
   when client received subscribed topic */
     client.setCallback(receivedCallback);
     /*start DHT sensor */
