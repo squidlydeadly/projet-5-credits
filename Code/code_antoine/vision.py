@@ -8,6 +8,8 @@ Created on Sun Dec 27 12:38:54 2020
 
 import cv2
 
+from system_classes import *
+
 import time
 import matplotlib.pyplot as plt
 import numpy as np
@@ -16,7 +18,7 @@ import numpy as np
 from vecangle import *
 
 def get_image():
-    return cv2.imread("images/terrain_test.png")
+    return cv2.imread("parcour_test.png")
 
 
 def template_pos(img, template):
@@ -45,22 +47,35 @@ def color_by_name(name):
     else:
         return None
 
+class Square:
+    def __init__(self,top_left,side_length,color,line_width=1):
+        self.color = color
+        self.top_left = tuple(top_left)
+        self.bottom_right = tuple(top_left + np.array([side_length,side_length]))
+        self.line_width = line_width
+    def draw(self,img):
+        cv2.rectangle(img,self.top_left,self.bottom_right,self.color.BGR,self.line_width)
+
 
 def inv_gray_scale_color(image,color):
     color_image= np.full_like(image,fill_value=color.BGR,dtype= np.uint8)
     #plt.imsave('color_image.jpg' ,color_image[:,:,::-1])
     diff_image= cv2.absdiff(image, color_image)
-    #plt.imsave('diff_image.jpg', diff_image[:,:,::-1])
+    #cv2.imwrite('diff_image.jpg', diff_image)
     gray_scale = cv2.cvtColor(diff_image, cv2.COLOR_BGR2GRAY)
     #plt.imsave('gray_scale.jpg',gray_scale,cmap='gray')
     inv_gray_scale = cv2.bitwise_not(gray_scale)
     return inv_gray_scale
 
-def get_position_top_left(inv_gray_scale,template):
+from scipy.interpolate import interp1d
 
-    res = cv2.matchTemplate(inv_gray_scale,template,cv2.TM_CCOEFF)
-    #plt.imsave('convolve.jpg',res,cmap='gray')
+def get_position_top_left(inv_gray_scale,template,img_name= ''):
+    #res = cv2.matchTemplate(inv_gray_scale,template,cv2.TM_CCOEFF)
+    res = cv2.filter2D(inv_gray_scale,cv2.CV_64F,template,anchor=(0,0),borderType=cv2.BORDER_CONSTANT)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+    #m = interp1d([min_val,max_val],[0,255])
+    #cv2.imwrite(img_name,m(res))
+
     return np.array(max_loc)
 
 def get_position(image,template,color):
@@ -69,21 +84,20 @@ def get_position(image,template,color):
     top_left = get_position_top_left(inv_gray_scale,template)
     centre_template = get_template_center(w,h)
     bottom_right = top_left + [w,h]
-    rect_dict = {'top_left':tuple(top_left),'bottom_right':tuple(bottom_right),'bgr':color.BGR}
-    return top_left + centre_template,rect_dict
+    square = Square(top_left,w,color)
+    return top_left + centre_template,square
 
 def get_template_center(w,h):
     return np.array([(w-1)/2,(h-1)/2])
 
-def get_position_orientation(image, template,mask, color):
+def get_position_orientation(image, template,template_dot,mask,inner_radius,color):
     w, h = template.shape[:2]
     centre_template = get_template_center(w,h)
 
     inv_gray_scale = inv_gray_scale_color(image, color)
     #plt.imsave('inv_gray_scale.jpg',inv_gray_scale,cmap='gray')
 
-    top_left = get_position_top_left(inv_gray_scale,template)
-
+    top_left = get_position_top_left(inv_gray_scale,template,'convolve.jpg')
     position = top_left + centre_template
 
     bottom_right = top_left + [w,h]
@@ -91,31 +105,97 @@ def get_position_orientation(image, template,mask, color):
     #plt.imsave('sliced_image.jpg',sliced_image,cmap='gray')
     masked_image = cv2.bitwise_and(sliced_image, sliced_image,mask=mask)
     #plt.imsave('masked_image.jpg',masked_image,cmap='gray')
-    M = cv2.moments(masked_image)
-    cx = M['m10']/M['m00']
-    cy = M['m01']/M['m00']
-    vec = centre_template - [cx,cy]
-    mass_center = position + vec
-    rect_dict = {'top_left':tuple(top_left),'bottom_right':tuple(bottom_right),'bgr':color.BGR}
-    line_dict = {'start':tuple(position.astype(int)),'end':tuple(mass_center.astype(int)),'bgr':color.BGR}
 
-    return (position,vec,rect_dict,line_dict)
+
+
+
+
+    w_dot, h_dot = template_dot.shape[:2]
+    centre_template_dot = get_template_center(w_dot,h_dot)
+
+    top_left_rel_dot = get_position_top_left(masked_image,template_dot,'convolve_dot.jpg')
+    top_left_dot = top_left_rel_dot + top_left
+
+    bottom_right_dot = top_left_dot + [w_dot,h_dot]
+    position_rel_dot = top_left_rel_dot + centre_template_dot
+    vec =centre_template - position_rel_dot
+
+
+    #M = cv2.moments(masked_image)
+    #cx = M['m10']/M['m00']
+    #cy = M['m01']/M['m00']
+    #vec = centre_template - [cx,cy]
+
+    #centre_masse = [cx,cy] + top_left
+    squares = []
+    squares.append(Square(top_left,w,color))
+    ring_thickness = int(w/2 - inner_radius - 0.5)
+    squares.append(Square(top_left + [ring_thickness,ring_thickness],inner_radius*2 +1,color))
+    squares.append(Square(top_left_dot.astype(int),w_dot,color))
+
+    return (position,vec,squares)
+
+def get_info_vision(img,to_detects,template_robot,dot_template,ball_template,mask,inner_radius):
+    vision_info = InfoVision()
+    rectangles =[]
+    for to_detect in to_detects:
+        if type(to_detect) is Ball:
+            #print('Ball')
+            position,rect = get_position(img,
+                                                ball_template,
+                                                to_detect.color)
+            #print(position)
+            vision_info.position_balle = position
+            rectangles.append(rect)
+
+
+        else:
+            position,direction_vec,rects= get_position_orientation(img,
+                                                           template_robot,
+                                                           dot_template,
+                                                           mask,
+                                                           inner_radius,
+                                                           to_detect.color)
+            vision_info.robots_info.append(RobotInfo(position,
+                                                              direction_vec,
+                                                              to_detect.robot_index))
+            rectangles.extend(rects)
+    #print('vision ' + str(time.perf_counter() - t_start))
+    for rect in rectangles:
+        rect.draw(img)
+    return vision_info
 
 
 if __name__ == "__main__":
-    n = 1
-    t_start = time.perf_counter()
-    template = cv2.imread('images/symboleBlanc.png',cv2.IMREAD_GRAYSCALE)
-    mask = cv2.imread('images/mask.png',0)
+    import template_generator
+    from config_loader import *
 
-    for i in range(n):
-        image = get_image()
-        for color in colors[0:1]:
-            position,orientation,img_out =  get_position_orientation(image, template,mask, color)
-            print(color.name + str(position) + ' ' + str(orientation))
-    t_stop = time.perf_counter()
-    b,g,r = cv2.split(image)       # get b,g,r
-    plt.imshow(img_out[:,:,::-1])
-    plt.imsave('img_out.jpg',img_out)
-    t_delta = t_stop - t_start
-    print("temps par iteration= " + str(t_delta/(n*len(colors))))
+    robot_rayon_e = 24
+    robot_rayon_i = 16
+
+
+    template_robot = template_generator.ring(robot_rayon_e,robot_rayon_i).astype(np.uint8)
+    mask = template_generator.circle(robot_rayon_e,robot_rayon_i).astype(np.uint8)
+    cv2.imwrite('template_robots.jpg',template_robot)
+
+    ret,mask = cv2.threshold(mask,254,255,cv2.THRESH_BINARY)
+    cv2.imwrite('mask.jpg',mask)
+
+
+    dot_rayon = 4
+
+    dot_template = template_generator.circle(dot_rayon,dot_rayon).astype(np.uint8)
+
+    cv2.imwrite('template_dot.jpg',dot_template)
+
+
+    to_detects = [Robot(color_by_name('magenta'),RobotsIndex.SKYNET_0),Robot(color_by_name('vert'),RobotsIndex.HUMANITY_0)]
+    vc = cv2.VideoCapture(0)
+
+    woot,img = vc.read()
+    vis_i = get_info_vision(img,to_detects,template_robot,dot_template,dot_template,mask,robot_rayon_i)
+    vis_i.print()
+    cv2.imwrite('output.jpg',img)
+
+    #plt.imshow(img_out[:,:,::-1])
+    #cv2.imwrite('img_out.jpg',img_out

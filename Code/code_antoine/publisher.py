@@ -4,7 +4,7 @@ from paho.mqtt import client as mqtt_client
 
 
 def publish_CommandSkynet(client,command_skynet):
-    topic = "SKYNET_" + str(command_skynet.num)
+    topic = command_skynet.robot_index.to_string()
     command_intensity = command_skynet.get_command_intensity()
     if(command_skynet.kick):
         print(topic + ' kick et bouge ' + str(command_intensity.clockwise_intensity) +', ' +  str(command_intensity.foward_intensity))

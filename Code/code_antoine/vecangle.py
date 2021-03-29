@@ -9,20 +9,6 @@ Created on Sun Jan  3 14:13:10 2021
 import numpy as np
 
 def get_angle(vec):
-    """
-    
-
-    Parameters
-    ----------
-    vec : TYPE
-        DESCRIPTION.
-
-    Returns
-    -------
-    angle_deg : TYPE
-        DESCRIPTION.
-
-    """
     angle_deg= np.arctan(vec[1]/vec[0])/np.pi*180
     if(vec[0] <0):
         angle_deg += 180
@@ -50,8 +36,8 @@ class VecAngle:
 class VecAngleDiff:
     def __init__(self,a,b):
         self.angle,self.is_clockwise = inner_angle(a.angle, b.angle)
-        
-        
+
+
 if __name__ == '__main__':
     print(inner_angle(200.3, 100.2))
     print(inner_angle(100.3, 200.2))
