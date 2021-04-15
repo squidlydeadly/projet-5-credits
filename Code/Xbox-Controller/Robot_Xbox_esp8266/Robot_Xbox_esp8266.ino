@@ -15,9 +15,9 @@ on Linux use "ifconfig" to get its IP address */
 const char *mqtt_server = "192.168.0.198";
 const int port = 1884;
 
-#define ROBOT_NAME "HUMANITY_0"
+//#define ROBOT_NAME "HUMANITY_0"
 //#define ROBOT_NAME "HUMANITY_1"
-//#define ROBOT_NAME "SKYNET_0"
+#define ROBOT_NAME "SKYNET_0"
 //#define ROBOT_NAME "SKYNET_1"
 
 /* create an instance of PubSubClient client */
@@ -90,7 +90,7 @@ void receivedCallback(char *topic, byte *payload, unsigned int length)
         //                away from the X-axis (Y=0). A greater value will assign
         //                more of the joystick's range to pivot actions.
         //                Allowable range: (0..+512)
-        float fPivYLimit = 450;
+        float fPivYLimit = 10;
 
         // TEMP VARIABLES
         float nMotPremixL; // Motor (left)  premixed output        (-128..+127)
@@ -164,15 +164,11 @@ void receivedCallback(char *topic, byte *payload, unsigned int length)
         Serial.println("L_mot:" + String(nMotMixL) + " R_mot:" + String(nMotMixR) + " compute time: " + String(micros() - lastMsg));
     }
 
-<<<<<<< HEAD
-    else if (button != 0) {
-        if (button == 13) {
-=======
+ 
     else if (button != 0)
     {
         if (button == 13)
         {
->>>>>>> 8973193195b827791db97828bc4865337edcbbbb
             Serial.println(button);
             Serial.println("kick !!!");
             kickservo.write(0);
@@ -216,7 +212,7 @@ void setup()
     Serial.println(ssid);
 
     kickservo.attach(servo_pin);
-    kickservo.write(0);
+    kickservo.write(90);
 
     pinMode(r_motor_pwm_pin, OUTPUT);
     pinMode(r_motor_A_pin, OUTPUT);
@@ -256,12 +252,8 @@ void setup()
 void loop()
 {
     /* if client was disconnected then try to reconnect again */
-<<<<<<< HEAD
-    if (!client.connected()) {
-=======
     if (!client.connected())
     {
->>>>>>> 8973193195b827791db97828bc4865337edcbbbb
         analogWrite(r_motor_pwm_pin, 0);
         analogWrite(l_motor_pwm_pin, 0);
         mqttconnect();
