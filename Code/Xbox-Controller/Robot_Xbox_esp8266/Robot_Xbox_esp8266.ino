@@ -6,18 +6,18 @@
 
 /* change it with your ssid-password */
 //const char* ssid = "COGECO-2D80";
-const char* ssid = "TP-Link_90B4";
+const char *ssid = "TP-Link_90B4";
 //const char* password = "028151303108";
-const char* password = "64460826";
+const char *password = "64460826";
 /* this is the IP of PC/raspberry where you installed MQTT Server
 on Wins use "ipconfig"
 on Linux use "ifconfig" to get its IP address */
-const char* mqtt_server = "192.168.0.198";
+const char *mqtt_server = "192.168.0.198";
 const int port = 1884;
 
 //#define ROBOT_NAME "HUMANITY_0"
-#define ROBOT_NAME "HUMANITY_1"
-//#define ROBOT_NAME "SKYNET_0"
+//#define ROBOT_NAME "HUMANITY_1"
+#define ROBOT_NAME "SKYNET_0"
 //#define ROBOT_NAME "SKYNET_1"
 
 /* create an instance of PubSubClient client */
@@ -48,32 +48,32 @@ int Y_pot = 0;
 //#define ROBO_AXIS_TOPIC "robot/axis"
 //define ROBO_BUTTON_TOPIC "robot/button"
 
-
 long lastMsg = 0;
 char msg[20];
 
-void receivedCallback(char* topic, byte* payload, unsigned int length)
+void receivedCallback(char *topic, byte *payload, unsigned int length)
 {
     lastMsg = micros();
     String inData;
     StaticJsonBuffer<200> jsonBuffer;
 
-    for (int i = 0; i < length; i++) {
+    for (int i = 0; i < length; i++)
+    {
         inData += (char)payload[i];
     }
     //Serial.println();
     //Serial.println(topic);
     //Serial.println(inData);
-    JsonObject& root = jsonBuffer.parseObject(inData);
+    JsonObject &root = jsonBuffer.parseObject(inData);
 
     String axis = root["axis"];
     int button = root["button"];
 
-    if (axis != "") {
+    if (axis != "")
+    {
 
         X_pot = root["x_axis"];
         Y_pot = root["y_axis"];
-
 
         // INPUTS
         int nJoyX = map(X_pot, -500, 500, -512, 512); // Joystick X input                     (-128..+127)
@@ -90,20 +90,23 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
         //                away from the X-axis (Y=0). A greater value will assign
         //                more of the joystick's range to pivot actions.
         //                Allowable range: (0..+512)
-        float fPivYLimit = 450;
+        float fPivYLimit = 10;
 
         // TEMP VARIABLES
         float nMotPremixL; // Motor (left)  premixed output        (-128..+127)
         float nMotPremixR; // Motor (right) premixed output        (-128..+127)
-        int nPivSpeed; // Pivot Speed                          (-128..+127)
-        float fPivScale; // Balance scale b/w drive and pivot    (   0..1   )
+        int nPivSpeed;     // Pivot Speed                          (-128..+127)
+        float fPivScale;   // Balance scale b/w drive and pivot    (   0..1   )
 
         // Calculate Drive Turn output due to Joystick X input
-        if (nJoyY >= 0) {
+        if (nJoyY >= 0)
+        {
             // Forward
             nMotPremixL = (nJoyX >= 0) ? 1023.0 : (1023.0 + nJoyX);
             nMotPremixR = (nJoyX >= 0) ? (1023.0 - nJoyX) : 1023.0;
-        } else {
+        }
+        else
+        {
             // Reverse
             nMotPremixL = (nJoyX >= 0) ? (1023.0 - nJoyX) : 1023.0;
             nMotPremixR = (nJoyX >= 0) ? 1023.0 : (1023.0 + nJoyX);
@@ -123,24 +126,28 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
         nMotMixL = (1.0 - fPivScale) * nMotPremixL + fPivScale * (nPivSpeed);
         nMotMixR = (1.0 - fPivScale) * nMotPremixR + fPivScale * (-nPivSpeed);
 
-         nMotMixL = map(nMotMixL, -512, 512, -700, 700);
-         nMotMixR = map(nMotMixR, -512, 512, -700, 700);
+        nMotMixL = map(nMotMixL, -512, 512, -700, 700);
+        nMotMixR = map(nMotMixR, -512, 512, -700, 700);
 
         // left motor output
-        if (nMotMixL < 0) {
+        if (nMotMixL < 0)
+        {
             digitalWrite(l_motor_A_pin, HIGH);
             digitalWrite(l_motor_B_pin, LOW);
-
-        } else {
+        }
+        else
+        {
             digitalWrite(l_motor_A_pin, LOW);
             digitalWrite(l_motor_B_pin, HIGH);
         }
         // right motor output
-        if (nMotMixR < 0) {
+        if (nMotMixR < 0)
+        {
             digitalWrite(r_motor_A_pin, LOW);
             digitalWrite(r_motor_B_pin, HIGH);
-
-        } else {
+        }
+        else
+        {
             digitalWrite(r_motor_A_pin, HIGH);
             digitalWrite(r_motor_B_pin, LOW);
         }
@@ -154,11 +161,14 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
         analogWrite(l_motor_pwm_pin, abs(nMotMixL));
 
         //Serial.println("X axis:" + String(nJoyX) + " Y_axis:" + String(nJoyY));
-        Serial.println("L_mot:" + String(nMotMixL) + " R_mot:" + String(nMotMixR) + " compute time: " + String(micros() - lastMsg) );
+        Serial.println("L_mot:" + String(nMotMixL) + " R_mot:" + String(nMotMixR) + " compute time: " + String(micros() - lastMsg));
     }
 
-     else if (button != 0) {
-        if (button == 13) {
+ 
+    else if (button != 0)
+    {
+        if (button == 13)
+        {
             Serial.println(button);
             Serial.println("kick !!!");
             kickservo.write(0);
@@ -171,17 +181,20 @@ void receivedCallback(char* topic, byte* payload, unsigned int length)
 void mqttconnect()
 {
     /* Loop until reconnected */
-    while (!client.connected()) {
+    while (!client.connected())
+    {
         Serial.print("MQTT connecting ...");
         /* client ID */
         String clientId = ROBOT_NAME;
         /* connect now */
-        if (client.connect(clientId.c_str())) {
+        if (client.connect(clientId.c_str()))
+        {
             Serial.println("connected");
 
             client.subscribe(ROBOT_NAME);
-
-        } else {
+        }
+        else
+        {
             Serial.print("failed, status code =");
             Serial.print(client.state());
             Serial.println("try again in 5 seconds");
@@ -199,7 +212,7 @@ void setup()
     Serial.println(ssid);
 
     kickservo.attach(servo_pin);
-    kickservo.write(0);
+    kickservo.write(90);
 
     pinMode(r_motor_pwm_pin, OUTPUT);
     pinMode(r_motor_A_pin, OUTPUT);
@@ -217,7 +230,8 @@ void setup()
 
     WiFi.begin(ssid, password);
 
-    while (WiFi.status() != WL_CONNECTED) {
+    while (WiFi.status() != WL_CONNECTED)
+    {
         delay(500);
         Serial.print(".");
     }
@@ -238,7 +252,10 @@ void setup()
 void loop()
 {
     /* if client was disconnected then try to reconnect again */
-    if (!client.connected()) {
+    if (!client.connected())
+    {
+        analogWrite(r_motor_pwm_pin, 0);
+        analogWrite(l_motor_pwm_pin, 0);
         mqttconnect();
     }
     client.loop();
