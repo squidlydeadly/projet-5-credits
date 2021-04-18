@@ -43,6 +43,8 @@ int motor_chanel = 0;
 int X_pot = 0;
 int Y_pot = 0;
 
+unsigned long timer_1 = 0;
+
 /* topics */
 //#define update_Topic "update"
 //#define ROBO_AXIS_TOPIC "robot/axis"
@@ -164,7 +166,6 @@ void receivedCallback(char *topic, byte *payload, unsigned int length)
         Serial.println("L_mot:" + String(nMotMixL) + " R_mot:" + String(nMotMixR) + " compute time: " + String(micros() - lastMsg));
     }
 
- 
     else if (button != 0)
     {
         if (button == 13)
@@ -246,9 +247,11 @@ void setup()
     /* this receivedCallback function will be invoked
   when client received subscribed topic */
     client.setCallback(receivedCallback);
-    /*start DHT sensor */
+    timer_1 = 0;
+
     delay(50);
 }
+
 void loop()
 {
     /* if client was disconnected then try to reconnect again */
@@ -257,6 +260,11 @@ void loop()
         analogWrite(r_motor_pwm_pin, 0);
         analogWrite(l_motor_pwm_pin, 0);
         mqttconnect();
+    }
+    if (millis() >= 2, 700, 000) // 45min * 60 * 1000 ms
+    {
+        analogWrite(r_motor_pwm_pin, 0);
+        analogWrite(l_motor_pwm_pin, 0);
     }
     client.loop();
 }
