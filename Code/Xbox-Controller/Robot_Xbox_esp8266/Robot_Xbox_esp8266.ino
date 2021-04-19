@@ -16,8 +16,8 @@ const char *mqtt_server = "192.168.0.198";
 const int port = 1884;
 
 //#define ROBOT_NAME "HUMANITY_0"
-//#define ROBOT_NAME "HUMANITY_1"
-#define ROBOT_NAME "SKYNET_0"
+#define ROBOT_NAME "HUMANITY_1"
+//#define ROBOT_NAME "SKYNET_0"
 //#define ROBOT_NAME "SKYNET_1"
 
 /* create an instance of PubSubClient client */
@@ -92,7 +92,7 @@ void receivedCallback(char *topic, byte *payload, unsigned int length)
         //                away from the X-axis (Y=0). A greater value will assign
         //                more of the joystick's range to pivot actions.
         //                Allowable range: (0..+512)
-        float fPivYLimit = 10;
+        float fPivYLimit = 5;
 
         // TEMP VARIABLES
         float nMotPremixL; // Motor (left)  premixed output        (-128..+127)
