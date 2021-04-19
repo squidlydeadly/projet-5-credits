@@ -261,7 +261,7 @@ void loop()
         analogWrite(l_motor_pwm_pin, 0);
         mqttconnect();
     }
-    if (millis() >= 2, 700, 000) // 45min * 60 * 1000 ms
+    if (millis() >= 2700000) // 45min * 60 * 1000 ms
     {
         analogWrite(r_motor_pwm_pin, 0);
         analogWrite(l_motor_pwm_pin, 0);
