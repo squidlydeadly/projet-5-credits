@@ -1,0 +1,79 @@
+\hypertarget{classskynet__control_1_1CommandeSkynet}{}\doxysection{skynet\+\_\+control.\+Commande\+Skynet Class Reference}
+\label{classskynet__control_1_1CommandeSkynet}\index{skynet\_control.CommandeSkynet@{skynet\_control.CommandeSkynet}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classskynet__control_1_1CommandeSkynet_a2e06a106ef6cd2decdcaec5a1f0ee3f7}\label{classskynet__control_1_1CommandeSkynet_a2e06a106ef6cd2decdcaec5a1f0ee3f7}} 
+def {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, robot\+\_\+index, angle=0, is\+\_\+clockwise=True, grandeur=0, is\+\_\+foward=True, kick=False)
+\item 
+def \mbox{\hyperlink{classskynet__control_1_1CommandeSkynet_a34b00791bc2b4e969560d1ae441f39c5}{get\+\_\+command\+\_\+intensity}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classskynet__control_1_1CommandeSkynet_a527313ffd54878b0a295e65ec5aa8d6d}\label{classskynet__control_1_1CommandeSkynet_a527313ffd54878b0a295e65ec5aa8d6d}} 
+{\bfseries robot\+\_\+index}
+\item 
+\mbox{\Hypertarget{classskynet__control_1_1CommandeSkynet_aebf4af61b1e717a753b7b68586b699f1}\label{classskynet__control_1_1CommandeSkynet_aebf4af61b1e717a753b7b68586b699f1}} 
+{\bfseries angle}
+\item 
+\mbox{\Hypertarget{classskynet__control_1_1CommandeSkynet_a36aba3da894a0d03ebe7e33348a25ad4}\label{classskynet__control_1_1CommandeSkynet_a36aba3da894a0d03ebe7e33348a25ad4}} 
+{\bfseries is\+\_\+clockwise}
+\item 
+\mbox{\Hypertarget{classskynet__control_1_1CommandeSkynet_a0560cf438066a818232b185d6c492d1a}\label{classskynet__control_1_1CommandeSkynet_a0560cf438066a818232b185d6c492d1a}} 
+{\bfseries grandeur}
+\item 
+\mbox{\Hypertarget{classskynet__control_1_1CommandeSkynet_ae5840eb022258a169073dd7e188dcf1c}\label{classskynet__control_1_1CommandeSkynet_ae5840eb022258a169073dd7e188dcf1c}} 
+{\bfseries is\+\_\+foward}
+\item 
+\mbox{\Hypertarget{classskynet__control_1_1CommandeSkynet_a4949d8af23997ae9b29ce11fa2563760}\label{classskynet__control_1_1CommandeSkynet_a4949d8af23997ae9b29ce11fa2563760}} 
+{\bfseries kick}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}commandes créés par la décision pour chaque robot
+
+Parameters
+----------
+robot_index : RobotIndex
+    identifiant du robot
+angle : float
+    erreur sur l'angle à combler
+is_clockwise : bool
+    le sens de l'angle (référentiel de l'image)
+grandeur : float
+    erreur sur la grandeur à combler
+is_foward : bool
+    sens de la grandeur
+kick : bool
+    est-ce que le robot doit frapper la balle
+
+Attributes
+----------
+robot_index
+angle
+is_clockwise
+grandeur
+is_foward
+kick\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classskynet__control_1_1CommandeSkynet_a34b00791bc2b4e969560d1ae441f39c5}\label{classskynet__control_1_1CommandeSkynet_a34b00791bc2b4e969560d1ae441f39c5}} 
+\index{skynet\_control.CommandeSkynet@{skynet\_control.CommandeSkynet}!get\_command\_intensity@{get\_command\_intensity}}
+\index{get\_command\_intensity@{get\_command\_intensity}!skynet\_control.CommandeSkynet@{skynet\_control.CommandeSkynet}}
+\doxysubsubsection{\texorpdfstring{get\_command\_intensity()}{get\_command\_intensity()}}
+{\footnotesize\ttfamily def skynet\+\_\+control.\+Commande\+Skynet.\+get\+\_\+command\+\_\+intensity (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}applique les PID aux commandes pour générer les données à envoyer aux robots
+
+Returns
+-------
+CommandIntensity
+    commande en intensité pour les robots\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+skynet\+\_\+control.\+py\end{DoxyCompactItemize}

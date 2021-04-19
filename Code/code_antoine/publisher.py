@@ -4,14 +4,26 @@ from paho.mqtt import client as mqtt_client
 
 
 def publish_CommandSkynet(client,command_skynet):
+    """
+    publie aux serveur MQTT les commandes pour un robot skynet
+
+    Parameters
+    ----------
+    client : MQTT client
+        client MQTT
+    command_skynet : CommandeSkynet
+        commande pour le robot en question
+
+    """
     topic = command_skynet.robot_index.to_string()
     command_intensity = command_skynet.get_command_intensity()
     if(command_skynet.kick):
         print(topic + ' kick et bouge ' + str(command_intensity.clockwise_intensity) +', ' +  str(command_intensity.foward_intensity))
-        payload = json.dumps({'axis':'skynet',
-        'x_axis':command_intensity.clockwise_intensity,
-        'y_axis':command_intensity.foward_intensity,
-        'button':13})
+        payload = json.dumps(
+        #{'axis':'skynet',
+        #'x_axis':command_intensity.clockwise_intensity,
+        #'y_axis':command_intensity.foward_intensity,
+        {'button':13})
     else:
         print(topic + ' bouge ' + str(command_intensity.clockwise_intensity) +', ' +  str(command_intensity.foward_intensity))
         payload = json.dumps({'axis':'skynet',
@@ -20,25 +32,33 @@ def publish_CommandSkynet(client,command_skynet):
     client.publish(topic,payload)
 
 def start_skynet_client():
-        port = 1883
-        client_id = "CONTROLLER OF SKYNET"
-        keepalive = 5000
-        broker = "localhost"
+    """lance le client MQTT
+
+    Returns
+    -------
+    MQTT.Client
+        le client MQTT
+
+    """
+    port = 1883
+    client_id = "CONTROLLER OF SKYNET"
+    keepalive = 5000
+    broker = "localhost"
 
 
-        def connect_mqtt()-> mqtt_client:
-            def on_connect(client,userdata,flags,rc):
-                if rc == 0:
-                    print("connected to mqtt broker")
-                else:
-                    print("connection failed")
+    def connect_mqtt()-> mqtt_client:
+        def on_connect(client,userdata,flags,rc):
+            if rc == 0:
+                print("connected to mqtt broker")
+            else:
+                print("connection failed")
 
-            client = mqtt_client.Client(client_id)
-            client.on_connect = on_connect
-            client.connect(broker, port, keepalive = keepalive)
-            return client
+        client = mqtt_client.Client(client_id)
+        client.on_connect = on_connect
+        client.connect(broker, port, keepalive = keepalive)
+        return client
 
-        return connect_mqtt()
+    return connect_mqtt()
 
 if __name__ == '__main__':
     import decision

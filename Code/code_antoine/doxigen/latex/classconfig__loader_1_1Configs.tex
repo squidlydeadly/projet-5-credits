@@ -1,0 +1,64 @@
+\hypertarget{classconfig__loader_1_1Configs}{}\doxysection{config\+\_\+loader.\+Configs Class Reference}
+\label{classconfig__loader_1_1Configs}\index{config\_loader.Configs@{config\_loader.Configs}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classconfig__loader_1_1Configs_a370706bd89d6feea7d69cc0ba7785bff}\label{classconfig__loader_1_1Configs_a370706bd89d6feea7d69cc0ba7785bff}} 
+def {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classconfig__loader_1_1Configs_a2721dd35a150550dd7efe50e4f8a8152}{get}} ()
+\item 
+def \mbox{\hyperlink{classconfig__loader_1_1Configs_a8a7ee5644de241f003b6d8cb82953f5b}{save}} (path=\textquotesingle{}\textquotesingle{})
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classconfig__loader_1_1Configs_a52edc451d7d8910ae0a822f9f4479f6b}\label{classconfig__loader_1_1Configs_a52edc451d7d8910ae0a822f9f4479f6b}} 
+string {\bfseries config\+\_\+path} = \textquotesingle{}config.\+yaml\textquotesingle{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}singleton charger et accéder aux configurations du projet
+
+Attributes
+----------
+config_path : string
+    Chemin du fichier de configuration
+__instance : dictionary
+    Dictionnaire des valeurs contenue dans le fichier de configs\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classconfig__loader_1_1Configs_a2721dd35a150550dd7efe50e4f8a8152}\label{classconfig__loader_1_1Configs_a2721dd35a150550dd7efe50e4f8a8152}} 
+\index{config\_loader.Configs@{config\_loader.Configs}!get@{get}}
+\index{get@{get}!config\_loader.Configs@{config\_loader.Configs}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily def config\+\_\+loader.\+Configs.\+get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxyVerb}renvoie crée instance ou le renvoie
+
+Returns
+-------
+dictionary
+    Dictionnaire des configs\end{DoxyVerb}
+ \mbox{\Hypertarget{classconfig__loader_1_1Configs_a8a7ee5644de241f003b6d8cb82953f5b}\label{classconfig__loader_1_1Configs_a8a7ee5644de241f003b6d8cb82953f5b}} 
+\index{config\_loader.Configs@{config\_loader.Configs}!save@{save}}
+\index{save@{save}!config\_loader.Configs@{config\_loader.Configs}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily def config\+\_\+loader.\+Configs.\+save (\begin{DoxyParamCaption}\item[{}]{path = {\ttfamily \textquotesingle{}\textquotesingle{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxyVerb}sauvegarde les configs dans un fichier yaml
+
+Parameters
+----------
+path : string
+    chemin de sauvegarde, prend celui de config_path si aucun défini\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+config\+\_\+loader.\+py\end{DoxyCompactItemize}

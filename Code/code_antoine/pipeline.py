@@ -37,6 +37,16 @@ from config_loader import Configs
 
 
 def stage_camera(q_in,q_out):
+    """étage d'acquisition d'images et renvoie les images sans distortion
+
+    Parameters
+    ----------
+    q_in : Queue
+        queue pour recevoir un signal de kill en cas de besoins
+    q_out : Queue
+        queue pour renvoyer les images à la vision
+
+    """
 
     vc = cv2.VideoCapture(Configs.get()['CAMERA']['ID'])
     vc.set(cv2.CAP_PROP_FPS,Configs.get()['CAMERA']['FPS'])
@@ -46,7 +56,7 @@ def stage_camera(q_in,q_out):
     vc.set(cv2.CAP_PROP_FRAME_HEIGHT,h)
 
     distortion_remover= wrap.distortionRemover(w,h)
-
+    warper = wrap.Warp.init_from_configs()
     while(True):
         t_start = time.perf_counter()
         time.sleep(Configs.get()['CAMERA']['SLEEP'])
@@ -56,9 +66,23 @@ def stage_camera(q_in,q_out):
                 return
         rval,img = vc.read()
         #print('camera ' + str(time.perf_counter() - t_start))
-        q_out.put(PipeDataImg(distortion_remover(img)))
+        q_out.put(PipeDataImg(warper(img,False)))
 
 def stage_vision(q_in,q_out,q_display,to_detects):
+    """étage d'analyse d'image
+
+    Parameters
+    ----------
+    q_in : Queue
+        Queue d'entrée contenant les images
+    q_out : Queue
+        queue de sortie envoyant les positions et angles
+    q_display : Queue
+        queue avec les rectangles de dessiné destiné à l'affichage
+    to_detects : array of ToDetect
+        tableau des éléments à détecter dans l'image
+
+    """
     robot_rayon_e = Configs.get()['ROBOT_TEMPLATE']['RAYON_E']
     robot_rayon_i = Configs.get()['ROBOT_TEMPLATE']['RAYON_I']
 
@@ -84,6 +108,17 @@ def stage_vision(q_in,q_out,q_display,to_detects):
         q_out.put(PipeDataVisionInfo(vis_i))
 
 def stage_dec_and_pub(q_in,mqtt_client):
+    """étage de décision et de publication
+
+    Parameters
+    ----------
+    q_in : Queue
+        Queue contenant les données de position et d'angle
+    mqtt_client : MQTT.Client
+        client MQTT
+
+
+    """
     while(True):
         pipe_data_infovision = q_in.get()
         #t_start = time.perf_counter()
@@ -95,6 +130,33 @@ def stage_dec_and_pub(q_in,mqtt_client):
         #print('dec_and_pub ' + str(time.perf_counter() - t_start))
 
 class Pipeline:
+    """pipeline de traitement, fait l'acquisition d'image, le traitement et la publiation
+
+    Parameters
+    ----------
+    to_detects : array of ToDetect
+        tableau des objets à détecter
+    mqtt_client : MQTT.Client
+        client MQTT
+
+    Attributes
+    ----------
+    q_to_stage_camera : Queue
+        queue se randant à la caméra
+    q_to_display : Queue
+        queue entre la vision et l'affichage
+    q_to_stage_vision : Queue
+        queue entre la caméra et la vision
+    q_to_stage_decision : Queue
+        queue entre la vision et la décision
+    stage_camera : Process
+        process de la caméra
+    stage_vision : Process
+        process de la vision
+    stage_dec_and_pub : Process
+        process de la décision et de la publication
+
+    """
     def __init__(self,to_detects,mqtt_client):
         self.q_to_stage_camera = Queue()
         self.q_to_display = Queue()
@@ -120,6 +182,32 @@ class Pipeline:
 
 
 class pipelineAndDisplay:
+    """class contenant le pipeline et un affichage TKinter
+
+    Parameters
+    ----------
+    parent : TK
+        fenêtre parent
+    to_detect : array of ToDetect
+        objets à détecter
+    mqtt_client : MQTT.Client
+        client MQTT
+
+    Attributes
+    ----------
+    on_closing : Func
+        fonction de fermeture du système
+    panel : Label
+        panneau pour afficher la sortie de la vision
+    pipeline : Pipeline
+        pipeline de traitement
+    queue_display : Queue
+        queue contenant les images à afficher
+    refresh_label : Func
+        fonction de rafraichiment de l'image
+    parent
+
+    """
     def __init__(self, parent,to_detect,mqtt_client):
         self.parent = parent
         self.parent.protocol("WM_DELETE_WINDOW", self.on_closing)

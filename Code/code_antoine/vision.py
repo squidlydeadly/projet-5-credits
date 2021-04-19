@@ -18,15 +18,26 @@ import numpy as np
 from vecangle import *
 
 def get_image():
+    """renvoie l'image test"""
     return cv2.imread("parcour_test.png")
 
 
-def template_pos(img, template):
-    res = cv2.matchTemplate(img,template,cv2.TM_CCOEFF)
-    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
-    return max_loc
-
 class Color:
+    """couleur
+
+    Parameters
+    ----------
+    name : string
+        nom de la couleur
+    BGR : type
+        code en BGR de la couleur
+
+    Attributes
+    ----------
+    name
+    BGR
+
+    """
     def __init__(self,name,BGR):
         self.name = name
         self.BGR = BGR
@@ -40,7 +51,10 @@ colors = [Color('magenta', [255,0,255]),
           Color('orange',[0,165,255]),
           Color('blanc',[255,255,255]),
           Color('noir',[0,0,0])]
+
+
 def color_by_name(name):
+    """renvoie la couleur par nom"""
     color_filtered = [color for color in colors if color.name==name]
     if len(color_filtered) == 1:
         return color_filtered[0]
@@ -48,16 +62,40 @@ def color_by_name(name):
         return None
 
 class Square:
+    """un carré à dessiner sur une image
+
+    Parameters
+    ----------
+    top_left : array of float
+        coin haut gauche du carré
+    side_length : int
+        longueur des coté du carré
+    color : Color
+        couleur du carré à dessiner
+    line_width : int
+        épaisseur de la ligne
+
+    Attributes
+    ----------
+    bottom_right : array of float
+        position du coin bas droit du carré
+    color
+    top_left
+    line_width
+
+    """
     def __init__(self,top_left,side_length,color,line_width=1):
         self.color = color
         self.top_left = tuple(top_left)
         self.bottom_right = tuple(top_left + np.array([side_length,side_length]))
         self.line_width = line_width
     def draw(self,img):
+        """dessine le carré sur img"""
         cv2.rectangle(img,self.top_left,self.bottom_right,self.color.BGR,self.line_width)
 
 
 def inv_gray_scale_color(image,color):
+    """renvoie l'image en nuances de gris par rapport à color"""
     color_image= np.full_like(image,fill_value=color.BGR,dtype= np.uint8)
     #plt.imsave('color_image.jpg' ,color_image[:,:,::-1])
     diff_image= cv2.absdiff(image, color_image)
@@ -70,15 +108,17 @@ def inv_gray_scale_color(image,color):
 from scipy.interpolate import interp1d
 
 def get_position_top_left(inv_gray_scale,template,img_name= ''):
+    """renvoie la position du coin haut gauche du template par convolution"""
     #res = cv2.matchTemplate(inv_gray_scale,template,cv2.TM_CCOEFF)
     res = cv2.filter2D(inv_gray_scale,cv2.CV_64F,template,anchor=(0,0),borderType=cv2.BORDER_CONSTANT)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
-    #m = interp1d([min_val,max_val],[0,255])
+    m = interp1d([min_val,max_val],[0,255])
     #cv2.imwrite(img_name,m(res))
 
     return np.array(max_loc)
 
 def get_position(image,template,color):
+    """renvoie la position du template de couleur color dans image """
     w, h = template.shape[:2]
     inv_gray_scale = inv_gray_scale_color(image,color)
     top_left = get_position_top_left(inv_gray_scale,template)
@@ -88,9 +128,11 @@ def get_position(image,template,color):
     return top_left + centre_template,square
 
 def get_template_center(w,h):
+    """renvoie le centre du template"""
     return np.array([(w-1)/2,(h-1)/2])
 
 def get_position_orientation(image, template,template_dot,mask,inner_radius,color):
+    """renvoie la position et l'angle d'un robot"""
     w, h = template.shape[:2]
     centre_template = get_template_center(w,h)
 
@@ -103,7 +145,10 @@ def get_position_orientation(image, template,template_dot,mask,inner_radius,colo
     bottom_right = top_left + [w,h]
     sliced_image = inv_gray_scale[top_left[1]:bottom_right[1],top_left[0]:bottom_right[0]]
     #plt.imsave('sliced_image.jpg',sliced_image,cmap='gray')
-    masked_image = cv2.bitwise_and(sliced_image, sliced_image,mask=mask)
+    if(sliced_image.shape[:2] == (w,h)):
+        masked_image = cv2.bitwise_and(sliced_image, sliced_image,mask=mask)
+    else:
+        masked_image = sliced_image
     #plt.imsave('masked_image.jpg',masked_image,cmap='gray')
 
 
@@ -125,7 +170,6 @@ def get_position_orientation(image, template,template_dot,mask,inner_radius,colo
     #cx = M['m10']/M['m00']
     #cy = M['m01']/M['m00']
     #vec = centre_template - [cx,cy]
-
     #centre_masse = [cx,cy] + top_left
     squares = []
     squares.append(Square(top_left,w,color))
@@ -136,6 +180,7 @@ def get_position_orientation(image, template,template_dot,mask,inner_radius,colo
     return (position,vec,squares)
 
 def get_info_vision(img,to_detects,template_robot,dot_template,ball_template,mask,inner_radius):
+    """renvoie les positions et orientations des objets de to_detects"""
     vision_info = InfoVision()
     rectangles =[]
     for to_detect in to_detects:
@@ -170,6 +215,7 @@ if __name__ == "__main__":
     import template_generator
     from config_loader import *
 
+    import wrap
     robot_rayon_e = 24
     robot_rayon_i = 16
 
@@ -188,14 +234,19 @@ if __name__ == "__main__":
 
     cv2.imwrite('template_dot.jpg',dot_template)
 
-
-    to_detects = [Robot(color_by_name('magenta'),RobotsIndex.SKYNET_0),Robot(color_by_name('vert'),RobotsIndex.HUMANITY_0)]
+    to_detects = [Robot(color_by_name('magenta'),RobotIndex(Equipe.SKYNET,0))]#,Robot(color_by_name('vert'),RobotsIndex.HUMANITY_0)]
     vc = cv2.VideoCapture(0)
 
     woot,img = vc.read()
-    vis_i = get_info_vision(img,to_detects,template_robot,dot_template,dot_template,mask,robot_rayon_i)
-    vis_i.print()
-    cv2.imwrite('output.jpg',img)
 
-    #plt.imshow(img_out[:,:,::-1])
-    #cv2.imwrite('img_out.jpg',img_out
+    cv2.imwrite('from_camera.jpg',img)
+    warper = wrap.Warp.init_from_configs()
+
+    img_input = warper(img)
+
+    cv2.imwrite('img_input.jpg',img_input)
+
+
+    vis_i = get_info_vision(img_input,to_detects,template_robot,dot_template,dot_template,mask,robot_rayon_i)
+    vis_i.print()
+    cv2.imwrite('output.jpg',img_input)

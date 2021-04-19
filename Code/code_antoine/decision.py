@@ -24,18 +24,35 @@ ball_radius = Configs.get()['BALLE']['RAYON']
 erreur_angle = Configs.get()['ERREUR']['ANGLE']
 erreur_distance = Configs.get()['ERREUR']['DISTANCE']
 
-terain_width = 640
 
-terrain_height = 480
 
-centre_but_skynet = [0,240]
+terrain_w = Configs.get()['CAMERA']['WIDTH'] - Configs.get()['CALIBRATION']['CROP_LEFT'] - Configs.get()['CALIBRATION']['CROP_RIGHT']
 
-centre_but_humanity = [640,240]
+terrain_h = Configs.get()['CAMERA']['HEIGHT'] - Configs.get()['CALIBRATION']['CROP_BOTTOM'] - Configs.get()['CALIBRATION']['CROP_TOP']
 
-demi_largeur_buts = 100
+terrain_half_h = int(terrain_h/2)
+
+centre_but_skynet = [0,terrain_half_h]
+
+centre_but_humanity = [terrain_w,terrain_half_h]
+
+demi_largeur_buts = 50
 
 
 def skynet_goal(robot_skynet):
+    """SKYNET possède la balle et doit viser le but adverse puis botter
+
+    Parameters
+    ----------
+    robot_skynet : RobotInfo
+        information du robot
+
+    Returns
+    -------
+    CommandeSkynet
+        commandes du robot
+
+    """
     commande = None
     if(not robot_skynet.possession_balle):
         commande = CommandeSkynet(robot_skynet.robot_index)
@@ -47,11 +64,25 @@ def skynet_goal(robot_skynet):
                                       kick=True)
         else:
             commande = CommandeSkynet(robot_skynet.robot_index,
+                                      grandeur=terrain_w,
                                       angle=diff_vecangle_but_direction.angle,
                                       is_clockwise=diff_vecangle_but_direction.is_clockwise)
     return commande
 
 def skynet_defence(robot_skynet):
+    """HUMANITY a la balle, skynet se dirige vers le but et le défend
+
+    Parameters
+    ----------
+    robot_skynet : RobotInfo
+        information du robot
+
+    Returns
+    -------
+    CommandeSkynet
+        commandes du robot
+
+    """
     vecangle_robot_but = VecAngle(centre_but_skynet - robot_skynet.position)
     commande = None
     if(vecangle_robot_but.get_norme() > demi_largeur_buts):
@@ -62,7 +93,8 @@ def skynet_defence(robot_skynet):
         commande = CommandeSkynet(robot_skynet.robot_index,
                                   angle=diff_vecangle_but_direction_inv.angle,
                                   is_clockwise=diff_vecangle_but_direction_inv.is_clockwise,
-                                  grandeur=vecangle_robot_but.get_norme(),
+                                  #grandeur=vecangle_robot_but.get_norme(),
+                                  grandeur=vecangle_robot_but.orth_projection_norme(robot_skynet.vecangle_direction),
                                   is_foward=False)
     else:
         #orienter vers la balle
@@ -70,11 +102,26 @@ def skynet_defence(robot_skynet):
                                   angle = robot_skynet.diff_vecangle.angle,
                                   is_clockwise=robot_skynet.diff_vecangle.is_clockwise)
     return commande
+
 def skynet_fetch(robot_skynet):
+    """personne n'a la balle, il faut aller la chercher
+
+    Parameters
+    ----------
+    robot_skynet : RobotInfo
+        information du robot
+
+    Returns
+    -------
+    CommandeSkynet
+        commandes du robot
+
+    """
     return CommandeSkynet(robot_skynet.robot_index,
                           angle=robot_skynet.diff_vecangle.angle,
                           is_clockwise=robot_skynet.diff_vecangle.is_clockwise,
-                          grandeur=robot_skynet.get_distance_balle_robot())
+                          grandeur=robot_skynet.vecangle_robot_balle.orth_projection_norme(robot_skynet.vecangle_direction))
+                          #grandeur=robot_skynet.vecangle_robot_balle.get_norme())
 
 StateMachineLike = {State.SKYNET_POSSESSION: skynet_goal, #L'Equipe Skynet a la balle, la balle doit se diriger vers le but
                     State.HUMANITY_POSSESSION: skynet_defence, #l'Equipe Humanity a la balle, mode defense
@@ -85,6 +132,19 @@ StateMachineLike = {State.SKYNET_POSSESSION: skynet_goal, #L'Equipe Skynet a la 
 
 
 def decision(info_vision):
+    """génère les commandes pour chaques robots
+
+    Parameters
+    ----------
+    info_vision : InfoVision
+        informations provenants de la vision
+
+    Returns
+    -------
+    list of CommandeSkynet
+        liste des commandes pour chaques robots
+
+    """
     #calcule de la situation actuelle
     info_vision.calculate_situation()
 

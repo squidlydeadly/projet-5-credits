@@ -1,0 +1,67 @@
+\hypertarget{classpipeline_1_1pipelineAndDisplay}{}\doxysection{pipeline.\+pipeline\+And\+Display Class Reference}
+\label{classpipeline_1_1pipelineAndDisplay}\index{pipeline.pipelineAndDisplay@{pipeline.pipelineAndDisplay}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classpipeline_1_1pipelineAndDisplay_a2140648a7e9bc52444f0460dc705933e}\label{classpipeline_1_1pipelineAndDisplay_a2140648a7e9bc52444f0460dc705933e}} 
+def {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, parent, to\+\_\+detect, mqtt\+\_\+client)
+\item 
+\mbox{\Hypertarget{classpipeline_1_1pipelineAndDisplay_add833d9028e1cce2468f9db19834340c}\label{classpipeline_1_1pipelineAndDisplay_add833d9028e1cce2468f9db19834340c}} 
+def {\bfseries refresh\+\_\+label} (self)
+\item 
+\mbox{\Hypertarget{classpipeline_1_1pipelineAndDisplay_adae95dea3f9d76b99d0b5458023d7ee9}\label{classpipeline_1_1pipelineAndDisplay_adae95dea3f9d76b99d0b5458023d7ee9}} 
+def {\bfseries on\+\_\+closing} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classpipeline_1_1pipelineAndDisplay_af11c8376efc6ed98f14b3dd1adff802e}\label{classpipeline_1_1pipelineAndDisplay_af11c8376efc6ed98f14b3dd1adff802e}} 
+{\bfseries parent}
+\item 
+\mbox{\Hypertarget{classpipeline_1_1pipelineAndDisplay_abc70414302b21d5cd7518ae73aa6a2dd}\label{classpipeline_1_1pipelineAndDisplay_abc70414302b21d5cd7518ae73aa6a2dd}} 
+{\bfseries panel}
+\item 
+\mbox{\Hypertarget{classpipeline_1_1pipelineAndDisplay_ad66e38a887745f0e56741dd8339ff387}\label{classpipeline_1_1pipelineAndDisplay_ad66e38a887745f0e56741dd8339ff387}} 
+{\bfseries pipeline}
+\item 
+\mbox{\Hypertarget{classpipeline_1_1pipelineAndDisplay_a90d05d780fad0ea6ecd2a7b1b7b3ae10}\label{classpipeline_1_1pipelineAndDisplay_a90d05d780fad0ea6ecd2a7b1b7b3ae10}} 
+{\bfseries queue\+\_\+display}
+\item 
+\mbox{\Hypertarget{classpipeline_1_1pipelineAndDisplay_a138757761e8a65f06774a9f01444b5ea}\label{classpipeline_1_1pipelineAndDisplay_a138757761e8a65f06774a9f01444b5ea}} 
+{\bfseries image}
+\item 
+\mbox{\Hypertarget{classpipeline_1_1pipelineAndDisplay_a7acc58f8a118d9bb126b2c7067524c4f}\label{classpipeline_1_1pipelineAndDisplay_a7acc58f8a118d9bb126b2c7067524c4f}} 
+{\bfseries imgtk}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}class contenant le pipeline et un affichage TKinter
+
+Parameters
+----------
+parent : TK
+    fenêtre parent
+to_detect : array of ToDetect
+    objets à détecter
+mqtt_client : MQTT.Client
+    client MQTT
+
+Attributes
+----------
+on_closing : Func
+    fonction de fermeture du système
+panel : Label
+    panneau pour afficher la sortie de la vision
+pipeline : Pipeline
+    pipeline de traitement
+queue_display : Queue
+    queue contenant les images à afficher
+refresh_label : Func
+    fonction de rafraichiment de l'image
+parent\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+pipeline.\+py\end{DoxyCompactItemize}

@@ -1,0 +1,116 @@
+\hypertarget{classsystem__classes_1_1RobotInfo}{}\doxysection{system\+\_\+classes.\+Robot\+Info Class Reference}
+\label{classsystem__classes_1_1RobotInfo}\index{system\_classes.RobotInfo@{system\_classes.RobotInfo}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classsystem__classes_1_1RobotInfo_ac5271e601c19da97d0bff9fd8427e5ec}\label{classsystem__classes_1_1RobotInfo_ac5271e601c19da97d0bff9fd8427e5ec}} 
+def {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, position, direction\+\_\+vec, robot\+\_\+index)
+\item 
+def \mbox{\hyperlink{classsystem__classes_1_1RobotInfo_a6464e46618e28360384c422e29ae4964}{calculate\+\_\+situation}} (self, position\+\_\+balle)
+\item 
+\mbox{\Hypertarget{classsystem__classes_1_1RobotInfo_a42398a4f4483ba808f8899a9aa8218d2}\label{classsystem__classes_1_1RobotInfo_a42398a4f4483ba808f8899a9aa8218d2}} 
+def {\bfseries get\+\_\+distance\+\_\+balle\+\_\+robot} (self)
+\item 
+def \mbox{\hyperlink{classsystem__classes_1_1RobotInfo_a537be98fb27a2dce4bfa1764646850ba}{get\+\_\+num}} (self)
+\item 
+def \mbox{\hyperlink{classsystem__classes_1_1RobotInfo_ac47e5caaa6ccc7f90d3b824ad479480a}{get\+\_\+equ}} (self)
+\item 
+def \mbox{\hyperlink{classsystem__classes_1_1RobotInfo_a168aa1fc90a5fb01d1a253818ee9a26b}{get\+\_\+name}} (self)
+\item 
+def \mbox{\hyperlink{classsystem__classes_1_1RobotInfo_ad3859997a176755fba8f53a5ff0369cd}{print}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classsystem__classes_1_1RobotInfo_abe6f056dd4e746837fd7f88d182f014a}\label{classsystem__classes_1_1RobotInfo_abe6f056dd4e746837fd7f88d182f014a}} 
+{\bfseries vecangle\+\_\+direction}
+\item 
+\mbox{\Hypertarget{classsystem__classes_1_1RobotInfo_a5e00b0259449d30b848207fe701a2a83}\label{classsystem__classes_1_1RobotInfo_a5e00b0259449d30b848207fe701a2a83}} 
+{\bfseries robot\+\_\+index}
+\item 
+\mbox{\Hypertarget{classsystem__classes_1_1RobotInfo_a9c5056f8cf7ed82c0ae26a4f64c33f2c}\label{classsystem__classes_1_1RobotInfo_a9c5056f8cf7ed82c0ae26a4f64c33f2c}} 
+{\bfseries position}
+\item 
+\mbox{\Hypertarget{classsystem__classes_1_1RobotInfo_a2bf542b060e67ec3449bf3d20fa8be85}\label{classsystem__classes_1_1RobotInfo_a2bf542b060e67ec3449bf3d20fa8be85}} 
+{\bfseries possession\+\_\+balle}
+\item 
+\mbox{\Hypertarget{classsystem__classes_1_1RobotInfo_a35e5bb34455ae051a93b87783562a755}\label{classsystem__classes_1_1RobotInfo_a35e5bb34455ae051a93b87783562a755}} 
+{\bfseries vecangle\+\_\+robot\+\_\+balle}
+\item 
+\mbox{\Hypertarget{classsystem__classes_1_1RobotInfo_a8f2e4b4ec7ec37f858e8e65e35ba5445}\label{classsystem__classes_1_1RobotInfo_a8f2e4b4ec7ec37f858e8e65e35ba5445}} 
+{\bfseries diff\+\_\+vecangle}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}informations relatives à un robot
+
+Parameters
+----------
+position : array of float
+    position du robot
+direction_vec : array of float
+    vecteur de direction du robot
+robot_index : RobotIndex
+    identifiant du robot
+
+Attributes
+----------
+vecangle_direction : VecAngle
+    direction du robot
+possession_balle : bool
+    si le robot possède la balle
+vecangle_robot_balle : VecAngle
+    direction entre le robot et la balle
+diff_vecangle : VecAngleDiff
+    difference entre la diretion du robot et de la balle
+robot_index
+position\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classsystem__classes_1_1RobotInfo_a6464e46618e28360384c422e29ae4964}\label{classsystem__classes_1_1RobotInfo_a6464e46618e28360384c422e29ae4964}} 
+\index{system\_classes.RobotInfo@{system\_classes.RobotInfo}!calculate\_situation@{calculate\_situation}}
+\index{calculate\_situation@{calculate\_situation}!system\_classes.RobotInfo@{system\_classes.RobotInfo}}
+\doxysubsubsection{\texorpdfstring{calculate\_situation()}{calculate\_situation()}}
+{\footnotesize\ttfamily def system\+\_\+classes.\+Robot\+Info.\+calculate\+\_\+situation (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{position\+\_\+balle }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}remplie les informations manquante relative à la balle
+
+Parameters
+----------
+position_balle : array of float
+    position de la balle\end{DoxyVerb}
+ \mbox{\Hypertarget{classsystem__classes_1_1RobotInfo_ac47e5caaa6ccc7f90d3b824ad479480a}\label{classsystem__classes_1_1RobotInfo_ac47e5caaa6ccc7f90d3b824ad479480a}} 
+\index{system\_classes.RobotInfo@{system\_classes.RobotInfo}!get\_equ@{get\_equ}}
+\index{get\_equ@{get\_equ}!system\_classes.RobotInfo@{system\_classes.RobotInfo}}
+\doxysubsubsection{\texorpdfstring{get\_equ()}{get\_equ()}}
+{\footnotesize\ttfamily def system\+\_\+classes.\+Robot\+Info.\+get\+\_\+equ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}renvoie léquipe de l'identifiant\end{DoxyVerb}
+ \mbox{\Hypertarget{classsystem__classes_1_1RobotInfo_a168aa1fc90a5fb01d1a253818ee9a26b}\label{classsystem__classes_1_1RobotInfo_a168aa1fc90a5fb01d1a253818ee9a26b}} 
+\index{system\_classes.RobotInfo@{system\_classes.RobotInfo}!get\_name@{get\_name}}
+\index{get\_name@{get\_name}!system\_classes.RobotInfo@{system\_classes.RobotInfo}}
+\doxysubsubsection{\texorpdfstring{get\_name()}{get\_name()}}
+{\footnotesize\ttfamily def system\+\_\+classes.\+Robot\+Info.\+get\+\_\+name (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}renvoie l'identifiant en string\end{DoxyVerb}
+ \mbox{\Hypertarget{classsystem__classes_1_1RobotInfo_a537be98fb27a2dce4bfa1764646850ba}\label{classsystem__classes_1_1RobotInfo_a537be98fb27a2dce4bfa1764646850ba}} 
+\index{system\_classes.RobotInfo@{system\_classes.RobotInfo}!get\_num@{get\_num}}
+\index{get\_num@{get\_num}!system\_classes.RobotInfo@{system\_classes.RobotInfo}}
+\doxysubsubsection{\texorpdfstring{get\_num()}{get\_num()}}
+{\footnotesize\ttfamily def system\+\_\+classes.\+Robot\+Info.\+get\+\_\+num (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}renvoie le numéro de l'identifiant\end{DoxyVerb}
+ \mbox{\Hypertarget{classsystem__classes_1_1RobotInfo_ad3859997a176755fba8f53a5ff0369cd}\label{classsystem__classes_1_1RobotInfo_ad3859997a176755fba8f53a5ff0369cd}} 
+\index{system\_classes.RobotInfo@{system\_classes.RobotInfo}!print@{print}}
+\index{print@{print}!system\_classes.RobotInfo@{system\_classes.RobotInfo}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily def system\+\_\+classes.\+Robot\+Info.\+print (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}print les commandes et l'identifiant\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+system\+\_\+classes.\+py\end{DoxyCompactItemize}

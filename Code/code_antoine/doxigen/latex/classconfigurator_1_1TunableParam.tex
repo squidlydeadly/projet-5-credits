@@ -1,0 +1,94 @@
+\hypertarget{classconfigurator_1_1TunableParam}{}\doxysection{configurator.\+Tunable\+Param Class Reference}
+\label{classconfigurator_1_1TunableParam}\index{configurator.TunableParam@{configurator.TunableParam}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classconfigurator_1_1TunableParam_ad68ba5c73e7227ef4a2b556ea95b0b1c}\label{classconfigurator_1_1TunableParam_ad68ba5c73e7227ef4a2b556ea95b0b1c}} 
+def {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, parent, name, default\+\_\+delta)
+\item 
+def \mbox{\hyperlink{classconfigurator_1_1TunableParam_a86b909f41a47fb4a3e4c723dcb1394ff}{plus}} (self)
+\item 
+def \mbox{\hyperlink{classconfigurator_1_1TunableParam_a582e7ba3eab1bb54fb0d91d1f933e882}{minus}} (self)
+\item 
+def \mbox{\hyperlink{classconfigurator_1_1TunableParam_a837e3068c465bed33dcd6cc1d3587c6e}{print}} (self)
+\item 
+def \mbox{\hyperlink{classconfigurator_1_1TunableParam_aaa3a45f8fd8fb79ae972886b98d4dc0a}{update\+\_\+config}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classconfigurator_1_1TunableParam_ae67f6ec5fa1a9c3290ffa8a7761bf672}\label{classconfigurator_1_1TunableParam_ae67f6ec5fa1a9c3290ffa8a7761bf672}} 
+{\bfseries name}
+\item 
+\mbox{\Hypertarget{classconfigurator_1_1TunableParam_ac5768d3bd6f5514ba8b930d834575761}\label{classconfigurator_1_1TunableParam_ac5768d3bd6f5514ba8b930d834575761}} 
+{\bfseries value}
+\item 
+\mbox{\Hypertarget{classconfigurator_1_1TunableParam_a9534b5f4458500b9975d39937d095fe9}\label{classconfigurator_1_1TunableParam_a9534b5f4458500b9975d39937d095fe9}} 
+{\bfseries entry\+\_\+delta}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}paramètre pouvant être modifié par le configurateur
+Parameters
+----------
+parent : Tk
+    conteneur tkinter du paramètre
+name : string
+    nom du paramètre dans le fichier de configuration
+default_delta : float
+    variation par défault du paramètre
+
+Attributes
+----------
+value : float
+    valeur du paramètre
+plus : func
+    fonction d'incrémentation
+minus : type
+    function de décrémentation
+entry_delta : Entry
+    champ modifiable de la valeur du delta
+name\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classconfigurator_1_1TunableParam_a582e7ba3eab1bb54fb0d91d1f933e882}\label{classconfigurator_1_1TunableParam_a582e7ba3eab1bb54fb0d91d1f933e882}} 
+\index{configurator.TunableParam@{configurator.TunableParam}!minus@{minus}}
+\index{minus@{minus}!configurator.TunableParam@{configurator.TunableParam}}
+\doxysubsubsection{\texorpdfstring{minus()}{minus()}}
+{\footnotesize\ttfamily def configurator.\+Tunable\+Param.\+minus (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}fonction de décrémentation de la valeur\end{DoxyVerb}
+ \mbox{\Hypertarget{classconfigurator_1_1TunableParam_a86b909f41a47fb4a3e4c723dcb1394ff}\label{classconfigurator_1_1TunableParam_a86b909f41a47fb4a3e4c723dcb1394ff}} 
+\index{configurator.TunableParam@{configurator.TunableParam}!plus@{plus}}
+\index{plus@{plus}!configurator.TunableParam@{configurator.TunableParam}}
+\doxysubsubsection{\texorpdfstring{plus()}{plus()}}
+{\footnotesize\ttfamily def configurator.\+Tunable\+Param.\+plus (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}fonction d'incrémentation de la valeur\end{DoxyVerb}
+ \mbox{\Hypertarget{classconfigurator_1_1TunableParam_a837e3068c465bed33dcd6cc1d3587c6e}\label{classconfigurator_1_1TunableParam_a837e3068c465bed33dcd6cc1d3587c6e}} 
+\index{configurator.TunableParam@{configurator.TunableParam}!print@{print}}
+\index{print@{print}!configurator.TunableParam@{configurator.TunableParam}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily def configurator.\+Tunable\+Param.\+print (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}affiche la valeur actuelle du paramètre
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classconfigurator_1_1TunableParam_aaa3a45f8fd8fb79ae972886b98d4dc0a}\label{classconfigurator_1_1TunableParam_aaa3a45f8fd8fb79ae972886b98d4dc0a}} 
+\index{configurator.TunableParam@{configurator.TunableParam}!update\_config@{update\_config}}
+\index{update\_config@{update\_config}!configurator.TunableParam@{configurator.TunableParam}}
+\doxysubsubsection{\texorpdfstring{update\_config()}{update\_config()}}
+{\footnotesize\ttfamily def configurator.\+Tunable\+Param.\+update\+\_\+config (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}actualise la configuration dans les configs
+
+Returns
+-------
+type
+    Description of returned object.\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+configurator.\+py\end{DoxyCompactItemize}

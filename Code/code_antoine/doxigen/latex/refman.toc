@@ -1,0 +1,87 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\contentsline {chapter}{\numberline {1}Hierarchical Index}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Class Hierarchy}{1}{section.1.1}%
+\contentsline {chapter}{\numberline {2}Class Index}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Class List}{3}{section.2.1}%
+\contentsline {chapter}{\numberline {3}Class Documentation}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}system\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}classes.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Ball Class Reference}{5}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Detailed Description}{5}{subsection.3.1.1}%
+\contentsline {section}{\numberline {3.2}vision.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Color Class Reference}{5}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Detailed Description}{6}{subsection.3.2.1}%
+\contentsline {section}{\numberline {3.3}skynet\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}control.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Commande\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Skynet Class Reference}{6}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Detailed Description}{7}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Member Function Documentation}{7}{subsection.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.2.1}get\_command\_intensity()}{7}{subsubsection.3.3.2.1}%
+\contentsline {section}{\numberline {3.4}skynet\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}control.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Command\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Intensity Class Reference}{7}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Detailed Description}{8}{subsection.3.4.1}%
+\contentsline {section}{\numberline {3.5}config\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}loader.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Configs Class Reference}{8}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Detailed Description}{8}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Member Function Documentation}{9}{subsection.3.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.2.1}get()}{9}{subsubsection.3.5.2.1}%
+\contentsline {subsubsection}{\numberline {3.5.2.2}save()}{9}{subsubsection.3.5.2.2}%
+\contentsline {section}{\numberline {3.6}configurator.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Configurator Class Reference}{9}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Detailed Description}{10}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Member Function Documentation}{10}{subsection.3.6.2}%
+\contentsline {subsubsection}{\numberline {3.6.2.1}get\_param\_value()}{10}{subsubsection.3.6.2.1}%
+\contentsline {subsubsection}{\numberline {3.6.2.2}on\_closing()}{10}{subsubsection.3.6.2.2}%
+\contentsline {subsubsection}{\numberline {3.6.2.3}refresh\_label()}{11}{subsubsection.3.6.2.3}%
+\contentsline {subsubsection}{\numberline {3.6.2.4}save()}{11}{subsubsection.3.6.2.4}%
+\contentsline {section}{\numberline {3.7}wrap.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}distortion\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Remover Class Reference}{11}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}Detailed Description}{11}{subsection.3.7.1}%
+\contentsline {section}{\numberline {3.8}system\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}classes.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Equipe Class Reference}{12}{section.3.8}%
+\contentsline {section}{\numberline {3.9}system\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}classes.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Info\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Vision Class Reference}{12}{section.3.9}%
+\contentsline {subsection}{\numberline {3.9.1}Detailed Description}{12}{subsection.3.9.1}%
+\contentsline {subsection}{\numberline {3.9.2}Member Function Documentation}{12}{subsection.3.9.2}%
+\contentsline {subsubsection}{\numberline {3.9.2.1}calculate\_situation()}{13}{subsubsection.3.9.2.1}%
+\contentsline {subsubsection}{\numberline {3.9.2.2}print()}{13}{subsubsection.3.9.2.2}%
+\contentsline {section}{\numberline {3.10}skynet\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}control.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}pid\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}List Class Reference}{13}{section.3.10}%
+\contentsline {subsection}{\numberline {3.10.1}Detailed Description}{13}{subsection.3.10.1}%
+\contentsline {subsection}{\numberline {3.10.2}Member Function Documentation}{13}{subsection.3.10.2}%
+\contentsline {subsubsection}{\numberline {3.10.2.1}get()}{14}{subsubsection.3.10.2.1}%
+\contentsline {section}{\numberline {3.11}pipedata.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Pipe\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Data Class Reference}{14}{section.3.11}%
+\contentsline {subsection}{\numberline {3.11.1}Detailed Description}{14}{subsection.3.11.1}%
+\contentsline {section}{\numberline {3.12}pipedata.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Pipe\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Data\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Img Class Reference}{15}{section.3.12}%
+\contentsline {subsection}{\numberline {3.12.1}Detailed Description}{15}{subsection.3.12.1}%
+\contentsline {section}{\numberline {3.13}pipedata.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Pipe\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Data\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Kill Class Reference}{15}{section.3.13}%
+\contentsline {subsection}{\numberline {3.13.1}Detailed Description}{16}{subsection.3.13.1}%
+\contentsline {section}{\numberline {3.14}pipedata.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Pipe\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Data\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Vision\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Info Class Reference}{16}{section.3.14}%
+\contentsline {subsection}{\numberline {3.14.1}Detailed Description}{16}{subsection.3.14.1}%
+\contentsline {section}{\numberline {3.15}pipeline.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Pipeline Class Reference}{17}{section.3.15}%
+\contentsline {subsection}{\numberline {3.15.1}Detailed Description}{17}{subsection.3.15.1}%
+\contentsline {section}{\numberline {3.16}pipeline.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}pipeline\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}And\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Display Class Reference}{17}{section.3.16}%
+\contentsline {subsection}{\numberline {3.16.1}Detailed Description}{18}{subsection.3.16.1}%
+\contentsline {section}{\numberline {3.17}system\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}classes.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Robot Class Reference}{18}{section.3.17}%
+\contentsline {subsection}{\numberline {3.17.1}Detailed Description}{19}{subsection.3.17.1}%
+\contentsline {section}{\numberline {3.18}system\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}classes.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Robot\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Index Class Reference}{19}{section.3.18}%
+\contentsline {subsection}{\numberline {3.18.1}Detailed Description}{19}{subsection.3.18.1}%
+\contentsline {subsection}{\numberline {3.18.2}Member Function Documentation}{20}{subsection.3.18.2}%
+\contentsline {subsubsection}{\numberline {3.18.2.1}to\_string()}{20}{subsubsection.3.18.2.1}%
+\contentsline {section}{\numberline {3.19}system\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}classes.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Robot\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Info Class Reference}{20}{section.3.19}%
+\contentsline {subsection}{\numberline {3.19.1}Detailed Description}{20}{subsection.3.19.1}%
+\contentsline {subsection}{\numberline {3.19.2}Member Function Documentation}{21}{subsection.3.19.2}%
+\contentsline {subsubsection}{\numberline {3.19.2.1}calculate\_situation()}{21}{subsubsection.3.19.2.1}%
+\contentsline {subsubsection}{\numberline {3.19.2.2}get\_equ()}{21}{subsubsection.3.19.2.2}%
+\contentsline {subsubsection}{\numberline {3.19.2.3}get\_name()}{21}{subsubsection.3.19.2.3}%
+\contentsline {subsubsection}{\numberline {3.19.2.4}get\_num()}{21}{subsubsection.3.19.2.4}%
+\contentsline {subsubsection}{\numberline {3.19.2.5}print()}{22}{subsubsection.3.19.2.5}%
+\contentsline {section}{\numberline {3.20}vision.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Square Class Reference}{22}{section.3.20}%
+\contentsline {subsection}{\numberline {3.20.1}Detailed Description}{22}{subsection.3.20.1}%
+\contentsline {subsection}{\numberline {3.20.2}Member Function Documentation}{22}{subsection.3.20.2}%
+\contentsline {subsubsection}{\numberline {3.20.2.1}draw()}{23}{subsubsection.3.20.2.1}%
+\contentsline {section}{\numberline {3.21}system\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}classes.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}State Class Reference}{23}{section.3.21}%
+\contentsline {section}{\numberline {3.22}system\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}classes.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}To\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Detect Class Reference}{23}{section.3.22}%
+\contentsline {subsection}{\numberline {3.22.1}Detailed Description}{24}{subsection.3.22.1}%
+\contentsline {section}{\numberline {3.23}configurator.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Tunable\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Param Class Reference}{24}{section.3.23}%
+\contentsline {subsection}{\numberline {3.23.1}Detailed Description}{24}{subsection.3.23.1}%
+\contentsline {subsection}{\numberline {3.23.2}Member Function Documentation}{25}{subsection.3.23.2}%
+\contentsline {subsubsection}{\numberline {3.23.2.1}minus()}{25}{subsubsection.3.23.2.1}%
+\contentsline {subsubsection}{\numberline {3.23.2.2}plus()}{25}{subsubsection.3.23.2.2}%
+\contentsline {subsubsection}{\numberline {3.23.2.3}print()}{25}{subsubsection.3.23.2.3}%
+\contentsline {subsubsection}{\numberline {3.23.2.4}update\_config()}{25}{subsubsection.3.23.2.4}%
+\contentsline {section}{\numberline {3.24}vecangle.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Vec\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Angle Class Reference}{26}{section.3.24}%
+\contentsline {subsection}{\numberline {3.24.1}Detailed Description}{26}{subsection.3.24.1}%
+\contentsline {section}{\numberline {3.25}vecangle.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Vec\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Angle\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Diff Class Reference}{26}{section.3.25}%
+\contentsline {subsection}{\numberline {3.25.1}Detailed Description}{27}{subsection.3.25.1}%
+\contentsline {section}{\numberline {3.26}wrap.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Warp Class Reference}{27}{section.3.26}%
+\contentsline {subsection}{\numberline {3.26.1}Detailed Description}{27}{subsection.3.26.1}%
+\contentsline {chapter}{Index}{29}{section*.63}%

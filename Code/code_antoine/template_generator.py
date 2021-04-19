@@ -4,6 +4,23 @@ import cv2
 import vision
 
 def circle(half_length,radius,max_val=255):
+    """crée un cercle en nuances de gris
+
+    Parameters
+    ----------
+    half_length : int
+        demi grandeur de l'image
+    radius : int
+        rayon du cercle
+    max_val : int
+        valeur maximal par pixel
+
+    Returns
+    -------
+    array of array of float
+        image de cercle
+
+    """
     template = np.zeros((2*half_length +1,2*half_length +1))
     center = vision.get_template_center(2*half_length+1,2*half_length+1)
     for i in range(2*half_length+1):
@@ -13,6 +30,23 @@ def circle(half_length,radius,max_val=255):
     return template
 
 def ring(radius_e,radius_i,max_val=255):
+    """crée une image en nuances de gris d'un anneau
+
+    Parameters
+    ----------
+    radius_e : int
+        rayon externe de l'anneau
+    radius_i : int
+        rayon interne de l'anneau
+    max_val : int
+        valeur maximal d'un pixel
+
+    Returns
+    -------
+    array of array of float
+        image de l'anneau
+
+    """
     template = np.zeros((2*radius_e +1,2*radius_e +1))
     center = vision.get_template_center(2*radius_e+1,2*radius_e+1)
     for i in range(2*radius_e+1):

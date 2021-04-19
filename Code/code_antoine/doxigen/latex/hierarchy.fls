@@ -1,0 +1,7 @@
+PWD /home/antoine/Documents/UQAC/20A/projet-5-credits/Code/code_antoine/doxigen/latex
+INPUT /usr/share/texmf-dist/web2c/texmf.cnf
+INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
+INPUT hierarchy.tex
+OUTPUT hierarchy.log
+INPUT /usr/share/texmf-dist/fonts/map/fontname/texfonts.map
+INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm

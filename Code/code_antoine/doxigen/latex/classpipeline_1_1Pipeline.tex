@@ -1,0 +1,71 @@
+\hypertarget{classpipeline_1_1Pipeline}{}\doxysection{pipeline.\+Pipeline Class Reference}
+\label{classpipeline_1_1Pipeline}\index{pipeline.Pipeline@{pipeline.Pipeline}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classpipeline_1_1Pipeline_ae4593d1ebe9111f70f8a89ed5980ace4}\label{classpipeline_1_1Pipeline_ae4593d1ebe9111f70f8a89ed5980ace4}} 
+def {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, to\+\_\+detects, mqtt\+\_\+client)
+\item 
+\mbox{\Hypertarget{classpipeline_1_1Pipeline_a9c880a51f5a159b576e792a86b4fd1a1}\label{classpipeline_1_1Pipeline_a9c880a51f5a159b576e792a86b4fd1a1}} 
+def {\bfseries start} (self)
+\item 
+\mbox{\Hypertarget{classpipeline_1_1Pipeline_ae482b4e63684a00fc285fafc88db85db}\label{classpipeline_1_1Pipeline_ae482b4e63684a00fc285fafc88db85db}} 
+def {\bfseries kill} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classpipeline_1_1Pipeline_aab64da9087bf45ddd9f0cbc6363f76ea}\label{classpipeline_1_1Pipeline_aab64da9087bf45ddd9f0cbc6363f76ea}} 
+{\bfseries q\+\_\+to\+\_\+stage\+\_\+camera}
+\item 
+\mbox{\Hypertarget{classpipeline_1_1Pipeline_ab29dea35a16ab8c4a237a98c772e87fe}\label{classpipeline_1_1Pipeline_ab29dea35a16ab8c4a237a98c772e87fe}} 
+{\bfseries q\+\_\+to\+\_\+display}
+\item 
+\mbox{\Hypertarget{classpipeline_1_1Pipeline_a2f73a777d8debd1f1495c34b8ee7a5b4}\label{classpipeline_1_1Pipeline_a2f73a777d8debd1f1495c34b8ee7a5b4}} 
+{\bfseries q\+\_\+to\+\_\+stage\+\_\+vision}
+\item 
+\mbox{\Hypertarget{classpipeline_1_1Pipeline_a977bb22dd97447ee34962311e9e79642}\label{classpipeline_1_1Pipeline_a977bb22dd97447ee34962311e9e79642}} 
+{\bfseries q\+\_\+to\+\_\+stage\+\_\+decision}
+\item 
+\mbox{\Hypertarget{classpipeline_1_1Pipeline_ad008bce79c70f966fd19c1bffea0ba78}\label{classpipeline_1_1Pipeline_ad008bce79c70f966fd19c1bffea0ba78}} 
+{\bfseries stage\+\_\+camera}
+\item 
+\mbox{\Hypertarget{classpipeline_1_1Pipeline_a4aafddc1e297ec97f1b8e691265e7f1f}\label{classpipeline_1_1Pipeline_a4aafddc1e297ec97f1b8e691265e7f1f}} 
+{\bfseries stage\+\_\+vision}
+\item 
+\mbox{\Hypertarget{classpipeline_1_1Pipeline_ab8ae2bca266d0da114499e725114c588}\label{classpipeline_1_1Pipeline_ab8ae2bca266d0da114499e725114c588}} 
+{\bfseries stage\+\_\+dec\+\_\+and\+\_\+pub}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}pipeline de traitement, fait l'acquisition d'image, le traitement et la publiation
+
+Parameters
+----------
+to_detects : array of ToDetect
+    tableau des objets à détecter
+mqtt_client : MQTT.Client
+    client MQTT
+
+Attributes
+----------
+q_to_stage_camera : Queue
+    queue se randant à la caméra
+q_to_display : Queue
+    queue entre la vision et l'affichage
+q_to_stage_vision : Queue
+    queue entre la caméra et la vision
+q_to_stage_decision : Queue
+    queue entre la vision et la décision
+stage_camera : Process
+    process de la caméra
+stage_vision : Process
+    process de la vision
+stage_dec_and_pub : Process
+    process de la décision et de la publication\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+pipeline.\+py\end{DoxyCompactItemize}

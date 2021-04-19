@@ -1,0 +1,118 @@
+\hypertarget{classconfigurator_1_1Configurator}{}\doxysection{configurator.\+Configurator Class Reference}
+\label{classconfigurator_1_1Configurator}\index{configurator.Configurator@{configurator.Configurator}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classconfigurator_1_1Configurator_a87e1335dd7455f538d1341b0d2e65d00}\label{classconfigurator_1_1Configurator_a87e1335dd7455f538d1341b0d2e65d00}} 
+def {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, parent)
+\item 
+def \mbox{\hyperlink{classconfigurator_1_1Configurator_a3594d6c758009cfc0d37dccbbd8ec79e}{get\+\_\+param\+\_\+value}} (self, name)
+\item 
+def \mbox{\hyperlink{classconfigurator_1_1Configurator_a52bfff12e62ac6624e952ea5d3b426a1}{save}} (self)
+\item 
+def \mbox{\hyperlink{classconfigurator_1_1Configurator_a87060cae62a2ff9b1e17a942d735ca46}{refresh\+\_\+label}} (self)
+\item 
+def \mbox{\hyperlink{classconfigurator_1_1Configurator_a3ee03514ad3df64cd409268d47b035f2}{on\+\_\+closing}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classconfigurator_1_1Configurator_a903843c5a3318ad751a175cf172bed15}\label{classconfigurator_1_1Configurator_a903843c5a3318ad751a175cf172bed15}} 
+{\bfseries vc}
+\item 
+\mbox{\Hypertarget{classconfigurator_1_1Configurator_aaa7a32cb1db3c8d3156e3613ac4e3187}\label{classconfigurator_1_1Configurator_aaa7a32cb1db3c8d3156e3613ac4e3187}} 
+{\bfseries w}
+\item 
+\mbox{\Hypertarget{classconfigurator_1_1Configurator_a4c20f20477eac66df7b17c7cdccf8a66}\label{classconfigurator_1_1Configurator_a4c20f20477eac66df7b17c7cdccf8a66}} 
+{\bfseries h}
+\item 
+\mbox{\Hypertarget{classconfigurator_1_1Configurator_aec9c3113cd75ef1555710c07989d45ed}\label{classconfigurator_1_1Configurator_aec9c3113cd75ef1555710c07989d45ed}} 
+{\bfseries parent}
+\item 
+\mbox{\Hypertarget{classconfigurator_1_1Configurator_a885f6f099ff20825e13f5fcf115a6ced}\label{classconfigurator_1_1Configurator_a885f6f099ff20825e13f5fcf115a6ced}} 
+{\bfseries panel}
+\item 
+\mbox{\Hypertarget{classconfigurator_1_1Configurator_adb1f6d48067b5efa4c01cdb3673b94e1}\label{classconfigurator_1_1Configurator_adb1f6d48067b5efa4c01cdb3673b94e1}} 
+{\bfseries calibration\+\_\+params}
+\item 
+\mbox{\Hypertarget{classconfigurator_1_1Configurator_ae8baf23593a8f31089d5ba0475b88140}\label{classconfigurator_1_1Configurator_ae8baf23593a8f31089d5ba0475b88140}} 
+{\bfseries image}
+\item 
+\mbox{\Hypertarget{classconfigurator_1_1Configurator_a76b0bd9439e69327e5fd61e54c260d39}\label{classconfigurator_1_1Configurator_a76b0bd9439e69327e5fd61e54c260d39}} 
+{\bfseries imgtk}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}ajoute un configurateur à une fenêtre Tkinter
+
+Parameters
+----------
+parent : Tk
+    fenêtre Tkinter parent
+
+Attributes
+----------
+vc : VideoCapture
+    capture de la caméra
+w : int
+    largeur de l'image
+h : int
+    hauteur de l'image
+on_closing : func
+    fonction de fermeture de la fenêtre
+panel : Label
+    label pour contenir l'image
+calibration_params : array of TunableParam
+    tableau des paramètres à calibrer
+save : func
+    fonction de sauvegarde des paramètres
+refresh_label : func
+    fonction à lancer pour rafraichir l'image du panel
+parent\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classconfigurator_1_1Configurator_a3594d6c758009cfc0d37dccbbd8ec79e}\label{classconfigurator_1_1Configurator_a3594d6c758009cfc0d37dccbbd8ec79e}} 
+\index{configurator.Configurator@{configurator.Configurator}!get\_param\_value@{get\_param\_value}}
+\index{get\_param\_value@{get\_param\_value}!configurator.Configurator@{configurator.Configurator}}
+\doxysubsubsection{\texorpdfstring{get\_param\_value()}{get\_param\_value()}}
+{\footnotesize\ttfamily def configurator.\+Configurator.\+get\+\_\+param\+\_\+value (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{name }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}renvoie la valeur du paramètre ayant comme nom name
+
+Parameters
+----------
+name : string
+    nom du paramètre
+
+Returns
+-------
+float
+    valeur actuel du paramètre\end{DoxyVerb}
+ \mbox{\Hypertarget{classconfigurator_1_1Configurator_a3ee03514ad3df64cd409268d47b035f2}\label{classconfigurator_1_1Configurator_a3ee03514ad3df64cd409268d47b035f2}} 
+\index{configurator.Configurator@{configurator.Configurator}!on\_closing@{on\_closing}}
+\index{on\_closing@{on\_closing}!configurator.Configurator@{configurator.Configurator}}
+\doxysubsubsection{\texorpdfstring{on\_closing()}{on\_closing()}}
+{\footnotesize\ttfamily def configurator.\+Configurator.\+on\+\_\+closing (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}détruit la fenêtre principale\end{DoxyVerb}
+ \mbox{\Hypertarget{classconfigurator_1_1Configurator_a87060cae62a2ff9b1e17a942d735ca46}\label{classconfigurator_1_1Configurator_a87060cae62a2ff9b1e17a942d735ca46}} 
+\index{configurator.Configurator@{configurator.Configurator}!refresh\_label@{refresh\_label}}
+\index{refresh\_label@{refresh\_label}!configurator.Configurator@{configurator.Configurator}}
+\doxysubsubsection{\texorpdfstring{refresh\_label()}{refresh\_label()}}
+{\footnotesize\ttfamily def configurator.\+Configurator.\+refresh\+\_\+label (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}refraichi le panel avec une nouvelle image\end{DoxyVerb}
+ \mbox{\Hypertarget{classconfigurator_1_1Configurator_a52bfff12e62ac6624e952ea5d3b426a1}\label{classconfigurator_1_1Configurator_a52bfff12e62ac6624e952ea5d3b426a1}} 
+\index{configurator.Configurator@{configurator.Configurator}!save@{save}}
+\index{save@{save}!configurator.Configurator@{configurator.Configurator}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily def configurator.\+Configurator.\+save (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}sauvegarde les param dans calibration_params\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+configurator.\+py\end{DoxyCompactItemize}
