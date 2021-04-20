@@ -16,8 +16,8 @@ const char* mqtt_server = "192.168.0.194";
 const int port = 1884;
 
 //define ROBOT_NAME "HUMANITY_0"
-//#define ROBOT_NAME "HUMANITY_1"
-#define ROBOT_NAME "SKYNET_0"
+#define ROBOT_NAME "HUMANITY_1"
+//#define ROBOT_NAME "SKYNET_0"
 //#define ROBOT_NAME "SKYNET_1"
 
 /* create an instance of PubSubClient client */
