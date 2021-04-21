@@ -30,7 +30,7 @@ class pidList:
 
         """
         if num not in pidList.pids:
-            pidList.pids[num] = (PID(10,0,0,setpoint=0),PID(20,0,0,setpoint=0))
+            pidList.pids[num] = (PID(4,0,0,setpoint=0),PID(4,0,0,setpoint=0))
         return pidList.pids[num]
 
 def clamp_intensity(val):

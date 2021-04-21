@@ -41,7 +41,7 @@ def cmd_only_grandeur(robot_info):
 
     """
     return CommandeSkynet(robot_info.robot_index,
-        grandeur=robot_info.vecangle_robot_balle.get_norme(),
+        grandeur=robot_info.vecangle_robot_balle.orth_projection_norme(robot_info.vecangle_direction),
         is_foward=robot_info.diff_vecangle.angle<90)
 
 if __name__ == '__main__':
@@ -68,7 +68,7 @@ if __name__ == '__main__':
     dot_template = template_generator.circle(dot_rayon,dot_rayon).astype(np.uint8)
 
     warper = wrap.Warp.init_from_configs()
-    to_detects = [Robot( vision.color_by_name('magenta'),RobotIndex(Equipe.SKYNET,0)),Ball(vision.color_by_name('blanc'))]
+    to_detects = [Robot( vision.color_by_name('azur'),RobotIndex(Equipe.SKYNET,0)),Ball(vision.color_by_name('blanc'))]
     mqtt_client = publisher.start_skynet_client()
     while(1):
         retv,img = vc.read()

@@ -59,12 +59,13 @@ def skynet_goal(robot_skynet):
     else:
         vecangle_robot_but = VecAngle(centre_but_humanity - robot_skynet.position)
         diff_vecangle_but_direction = VecAngleDiff(robot_skynet.vecangle_direction,vecangle_robot_but)
-        if(diff_vecangle_but_direction.angle < erreur_angle):
+        if(diff_vecangle_but_direction.angle - 10 < erreur_angle):
             commande = CommandeSkynet(robot_skynet.robot_index,
                                       kick=True)
         else:
             commande = CommandeSkynet(robot_skynet.robot_index,
                                       grandeur=terrain_w,
+                                      is_foward=diff_vecangle_but_direction.angle<90,
                                       angle=diff_vecangle_but_direction.angle,
                                       is_clockwise=diff_vecangle_but_direction.is_clockwise)
     return commande
