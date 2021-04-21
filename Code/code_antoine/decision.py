@@ -129,7 +129,7 @@ class CommandeSkynet:
         self.grandeur = grandeur
         self.is_foward = is_foward
         self.kick = kick
-    def get_command_intesity(self):
+    def get_command_intensity(self):
         angle_max = 90
         grandeur_max = 10
         intensity_max = 512
